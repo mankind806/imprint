@@ -10,6 +10,31 @@ the two apart – rather than as advice.
 It ships as a Claude Code plugin, so the rules arrive as skills the agent can reach for
 during a session rather than as a document somebody has to remember to open.
 
+There is an awkwardness in that sentence worth saying out loud rather than burying at the
+bottom. A skill loads when the model recognises that the task matches it — which is *after*
+the model has decided how to approach the task. But the delegation contract is mostly about
+decisions taken before that point: who leads, whether to dispatch at all, who ends up
+holding the pen. By the time a model thinks "this is a delegation question, I should open
+the delegation skill," it has usually already framed the delegation. A plugin cannot ship a
+`CLAUDE.md` (see [Known limits](#known-limits)), so there is no ambient-context route
+either. The foundation layer is the one the delivery mechanism guarantees least. Until that
+changes, the honest reading is: these skills work best when you invoke them deliberately at
+the start of a piece of multi-agent work, and only incidentally when the model happens to
+reach for one mid-flight.
+
+## Status
+
+Early, and deliberately partial.
+
+**Only the first layer ships so far**, and only three of its rules. The knowledge-system
+layer sketched below is intent, not content: there is nothing in this repository that
+implements it. Read that section as a statement of direction, not as a description of what
+you get.
+
+The three skills that are here were practice before they were text, which is the right
+order but means the text lags the practice. It has now had one adversarial read by a party
+that did not write it; expect the structure to move again before it settles.
+
 ## Who this is for
 
 Anyone working with more than one coding agent who has noticed that the interesting
@@ -26,11 +51,26 @@ If you use a single assistant for single tasks, this is more machinery than you 
 /plugin install imprint@imprint
 ```
 
-The repository is its own marketplace, which is why the name appears twice; the
-`@marketplace` suffix disambiguates, so plain `/plugin install imprint` also works while no
-other marketplace you have added offers a plugin by that name. Once installed, the skills are
-addressed as `/imprint:delegation-contract` and so on, and Claude reaches for them on its own
+The repository is its own marketplace, which is why the name appears twice. Both the
+qualified form above and plain `/plugin install imprint` resolve to the same plugin, and
+once installed the skills are addressed as `/imprint:delegation-contract` and so on, with
+the agent as `imprint:foreign-material-reviewer`. Claude also reaches for them on its own
 when a task matches their description.
+
+*Measured 2026-09-13 on Claude Code 2.1.269, against a local checkout: `marketplace add`
+followed by both the qualified and the bare `install` succeeded, and `claude
+--plugin-dir … -p` lists all three skills and the agent under the `imprint:` prefix.* Two
+things about that measurement are worth stating rather than glossing:
+
+- It exercised a **local path**, not the `mankind806/imprint` shorthand, because the
+  repository has not been pushed yet. The shorthand adds a clone step before the same
+  resolution. **Unmeasured until the first push; measure it then** — if a marketplace whose
+  plugin `source` is the repository root fails over the network, the failure is at install
+  time and total.
+- Whether the bare `install imprint` stays unambiguous depends on the other marketplaces
+  *you* have added. It was measured with no competing plugin of that name present, which is
+  the only condition under which the shorthand is meaningful at all. If you already have an
+  `imprint` from somewhere else, use the qualified form.
 
 ## What is in the box
 
@@ -38,14 +78,16 @@ Three skills and one agent. Each skill states, for every rule it carries, what e
 or says plainly that nothing does.
 
 - **`delegation-contract`** – who leads and who advises, and how a delegated task tells the
-  receiver which of the two it is. The header to put in front of a dispatch. Readers in
-  parallel, exactly one writer at a time. Why a subagent's own success report does not count
-  as evidence that it wrote anything, and why a required human yes does not travel with a
-  delegation.
+  receiver which of the two it is – including why the flag you were invoked with does not
+  answer that question. The header to put in front of a dispatch. Readers in parallel,
+  exactly one writer at a time, and where "do not do it yourself" stops. Why a subagent's
+  own success report does not count as evidence that it wrote anything, and why a required
+  human yes does not travel with a delegation.
 
 - **`blind-first-pass`** – how to set up a second opinion so it is worth having. Staged
-  disclosure: the reproduction and the numbers first, your hypothesis last. When a closed
-  question wants an independent *measurement* rather than another opinion. How to put
+  disclosure: the reproduction and the numbers first, your hypothesis last. Why a
+  context-inheriting dispatch silently gives you the opposite of a blind review. When a
+  closed question wants an independent *measurement* rather than another opinion. How to put
   disagreement in front of a person as a table of claims instead of averaging it away.
 
 - **`measure-before-asserting`** – anything that can be executed, queried or looked up is,
@@ -56,62 +98,66 @@ or says plainly that nothing does.
 - **`foreign-material-reviewer`** (agent) – a read-only triage role for material you did not
   write. Its `tools:` frontmatter is an allowlist of `Read`, `Grep` and `Glob`, which is the
   point: a prompt asking an agent to stay read-only is a behaviour rule, and behaviour rules
-  are broken by exactly the input this agent exists to handle.
+  are broken by exactly the input this agent exists to handle. What it does *not* close is
+  named in its own description.
 
 ## The two layers
 
-**Agent collaboration is the foundation.** Who leads and who advises, and how a delegated
-task tells the receiver which of the two it is. Readers in parallel, exactly one writer at
-a time. When a second opinion adds information and when it only adds agreement – and why a
-closed, checkable question wants an independent measurement rather than another opinion.
-How to put disagreement in front of a human instead of averaging it away. Choosing the
-cheapest model that clearly passes the job, and escalating to a stronger one instead of
-resampling the same one. And ending a session as a handover, because the expensive thing to
-reconstruct is not the unfinished file but the reason the next step was going to be that
-step.
+**Agent collaboration is the foundation, and it is what ships.** Who leads and who advises,
+and how a delegated task tells the receiver which of the two it is. Readers in parallel,
+exactly one writer at a time. When a second opinion adds information and when it only adds
+agreement – and why a closed, checkable question wants an independent measurement rather
+than another opinion. How to put disagreement in front of a human instead of averaging it
+away. Escalating to a stronger voice rather than resampling the same one after it has
+already failed twice.
 
-**The knowledge system sits on top.** One canonical place per fact, with every other view
-generated, linked or embedded rather than copied. Provenance on every entry, including how
-it was obtained. Superseding instead of deleting, so the replaced state stays provable
-after the visible one changes. Gates that stop an action rather than warn about it, and an
-explicit note wherever nothing but discipline holds a rule in place. And a standing
-preference for measuring a property over citing your own notes about it, because notes are
-a snapshot with a date on them, and a wrong one looks exactly like a right one.
+**A knowledge system is meant to sit on top. None of it is written yet.** The intended
+shape: one canonical place per fact, with every other view generated, linked or embedded
+rather than copied. Provenance on every entry, including how it was obtained. Superseding
+instead of deleting, so the replaced state stays provable after the visible one changes.
+Gates that stop an action rather than warn about it, and an explicit note wherever nothing
+but discipline holds a rule in place. And a standing preference for measuring a property
+over citing your own notes about it — the one part of that list which *has* been written,
+as `measure-before-asserting`.
 
-The second layer needs the first. A knowledge base with several writers and no rule about
-who holds the pen produces contradictory states that nobody reports.
-
-## Status
-
-Early, and deliberately partial.
-
-**Only the first layer ships so far**, and only three of its rules. The knowledge-system
-layer described above is intent, not content: there is nothing in this repository that
-implements it yet. Read the section as a statement of where this is going, not as a
-description of what you get.
-
-The three skills that are here were practice before they were text, which is the right
-order but means the text lags the practice and has not yet been read by anyone who did not
-write it. Expect the structure to move before it settles.
+The second layer will need the first. A knowledge base with several writers and no rule
+about who holds the pen produces contradictory states that nobody reports.
 
 ## Known limits
 
-Two of these are unmeasured rather than merely unfinished, and it seems better to say so
-than to leave them out:
+Each of these says what kind of claim it is — measured here, or merely carried forward — and
+carries a date by which it should be looked at again. A named gap without a date stops being
+a gap and turns into how the system simply is. The horizon is three months for all four:
+Claude Code ships frequently enough that a longer one would be fiction, and often enough
+that a shorter one would be busywork.
 
-- **Whether plugin hooks run in claude.ai cloud sessions is not documented anywhere we
-  could find, and we have not measured it.** This release ships no hooks, so nothing here
-  depends on the answer — but if you extend the plugin with a hook, do not assume it fires
-  everywhere the skills do.
-- **IDE support is not mentioned in the plugin documentation.** We do not know whether
-  skills and agents from a plugin are available in the IDE integrations the same way they
-  are in the terminal. Untested.
+- **Whether plugin hooks run in claude.ai cloud sessions: unmeasured, and not documented
+  anywhere we could find.** This release ships no hooks, so nothing here depends on the
+  answer — but if you extend the plugin with a hook, do not assume it fires everywhere the
+  skills do. *Re-check by 2026-12-13.*
+- **Whether a plugin's skills and agents are available in the IDE integrations the same way
+  they are in the terminal: unmeasured.** The plugin documentation does not mention IDE
+  support either way, and we have not tested it. *Re-check by 2026-12-13.*
+- **A plugin cannot ship a `CLAUDE.md`: measured 2026-09-13 on Claude Code 2.1.269.** A
+  copy of this plugin was given a root `CLAUDE.md` containing a sentinel phrase and loaded
+  with `--plugin-dir` from a directory with no project rules of its own. Asked to quote the
+  instructions it had been given, the session reproduced the user-level rules at length,
+  stated it had no project instructions, and never emitted the sentinel. So these rules take
+  effect when a skill is invoked, not as ambient context in every session — which is what
+  the opening section is about. *Measured through `--plugin-dir`; whether an installed
+  plugin behaves identically here is not separately measured. Re-check by 2026-12-13.*
+- **`hooks`, `mcpServers` and `permissionMode` in a plugin agent's frontmatter are silently
+  ignored: carried over from the first release's notes, and the source for it was not
+  re-located when this section was written.** It is why the agent relies on `tools:` and
+  claims nothing else — a conservative choice that costs nothing even if the claim turns out
+  to be wrong. "Silently" is the load-bearing word: there would be no error to notice either
+  way, which is precisely why this one wants a measurement rather than a re-reading.
+  *Measure it, or cite a source for it, by 2026-12-13.*
 
-Two further limits are known rather than unmeasured. A plugin cannot ship a `CLAUDE.md`: a
-rules file placed in the plugin root is not loaded, so these rules take effect when a skill
-is invoked, not as ambient context in every session. And `hooks`, `mcpServers` and
-`permissionMode` in a plugin agent's frontmatter are silently ignored, which is why the
-agent here relies on `tools:` and claims nothing else.
+One further gap is named inside `delegation-contract` rather than here, because it is a
+property of the rules and not of the packaging: a triage agent's *findings* flow back into
+an agent that does hold Bash and write access, and nothing marks that return as foreign.
+That seam is named, not closed.
 
 ## License
 

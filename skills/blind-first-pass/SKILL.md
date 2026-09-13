@@ -61,9 +61,19 @@ hard to reverse.
 
 One agent cannot be both. If you want an arbiter, dispatch a third.
 
-The cheapest mechanical way to get a blind pass is context separation: dispatch a fresh
+The cheapest mechanical way to get a blind pass is context separation: dispatch a **fresh**
 agent and give it the artefact, not the transcript. What makes it blind is the *context
 boundary*, not the fact that it is a different model.
+
+🔴 **"Fresh" is a property of the dispatch, and one dispatch type is the exact opposite.**
+Claude Code offers a subagent type called `fork`, and a fork **inherits the parent's full
+conversation history** — the task, every tool call, every result, your reasoning. Dispatched
+that way, the reviewer sees precisely what the blind pass exists to withhold, and you get a
+confident second voice that has already read your hypothesis. A fork is an excellent way to
+continue your own work in the background. It is not a second opinion, and asking it to
+"ignore what you have seen" does not make it one. *(Measured against the Claude Code
+subagent tool description, 2026-09-13, CLI 2.1.269; other harnesses have their own
+context-inheriting dispatch — check yours before assuming a fresh context.)*
 
 **Whoever picks the excerpt determines the verdict.** If the reviewer receives its slice
 from the party being reviewed, it reviews that party's view of the problem — in a separate
@@ -101,14 +111,13 @@ not an order.
 
 The initial assignment of which voice is good at what is a starting value, not a law. Watch
 who actually delivers. After two failed attempts change the level rather than resampling the
-same agent — a retry is not a diagnostic instrument. Whoever retries should first name the
-time-dependent cause they are assuming; if they cannot name one, looking is the right move.
+same agent; resampling is not diagnosis, and `measure-before-asserting` says why.
 
 ## What actually enforces this
 
 | Rule | Enforcement |
 |---|---|
-| The reviewer does not see your reasoning | **Enforced** by the context boundary, if you dispatch a fresh agent and hand it the artefact. It is not enforced by asking a model to ignore what it already read. |
+| The reviewer does not see your reasoning | **Enforced** by the context boundary — but only for a dispatch that starts a fresh context. A context-inheriting dispatch (Claude Code's `fork`) enforces the opposite, and the wrong choice is silent. Check which one your dispatch is. Asking a model to ignore what it already read enforces nothing. |
 | The reviewer's sample was not chosen by the author | **Enforceable** — have the tool draw it. Usually left as a behaviour rule. |
 | Stages A/B/C in order | **Behaviour rule.** |
 | Disagreement is surfaced rather than averaged | **Behaviour rule**, and the one most quietly broken, because a smoothed summary reads better than a table. |
