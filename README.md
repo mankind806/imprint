@@ -63,11 +63,14 @@ followed by both the qualified and the bare `install` succeeded, and `claude
 --plugin-dir … -p` lists all three skills and the agent under the `imprint:` prefix.* Two
 things about that measurement are worth stating rather than glossing:
 
-- It exercised a **local path**, not the `mankind806/imprint` shorthand, because the
-  repository has not been pushed yet. The shorthand adds a clone step before the same
-  resolution. **Unmeasured until the first push; measure it then** — if a marketplace whose
-  plugin `source` is the repository root fails over the network, the failure is at install
-  time and total.
+- It exercised a **local path**, not the `mankind806/imprint` shorthand, which adds a clone
+  step before the same resolution. That shorthand has since been measured on its own, after
+  the first push and from an isolated configuration: `claude plugin marketplace add
+  mankind806/imprint` cloned over HTTPS and validated, `claude plugin install imprint@imprint`
+  reported success, and a session started afterwards listed all three skills and the agent —
+  loaded out of the installed plugin cache, not out of any checkout. A marketplace whose
+  plugin `source` is the repository root therefore does resolve over the network; had it not,
+  the failure would have been at install time and total.
 - Whether the bare `install imprint` stays unambiguous depends on the other marketplaces
   *you* have added. It was measured with no competing plugin of that name present, which is
   the only condition under which the shorthand is meaningful at all. If you already have an
