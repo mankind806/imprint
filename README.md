@@ -185,6 +185,48 @@ property of the rules and not of the packaging: a triage agent's *findings* flow
 an agent that does hold Bash and write access, and nothing marks that return as foreign.
 That seam is named, not closed.
 
+## The pre-push hook
+
+One rule here has a mechanical half, and this repository now runs it: nothing leaves this
+repository except its git identity. `.githooks/pre-push` refuses a push whose commits carry
+an identity this clone has not declared, and it refuses a push whose tracked content or
+commit messages match a shape that personal data takes — an address of the kind mail uses, a
+German phone number, an IBAN, a five-digit postcode followed by a place name. It reads every
+commit in the pushed range rather than the tip alone, because a push publishes the whole
+range, and a file removed in a later commit stays reachable by its hash for anyone who
+clones. Commit messages are checked alongside the trees, since a message is as public as a
+blob and trailers are where addresses ride in.
+
+**It does not arrive with a clone.** Git runs hooks out of `.git/hooks` unless it is told
+otherwise, and nothing in a checkout can tell it for you. Each clone needs one line:
+
+```
+git config core.hooksPath .githooks
+```
+
+A co-author or a fork declares a second identity with
+`git config --add imprint.allowedIdentity 'Name <address>'`. Your own `user.name` and
+`user.email` count as declared without being listed.
+
+**What it does not enforce is the larger half.** The rule asks for abstraction: a worked case
+told generically, with no organisation, no product, no ticket number, no path off anybody's
+machine. Whether a passage is abstract is a question of meaning, and no pattern answers it. A
+page naming a real employer in plain words passes this hook exactly as a properly abstracted
+one does, and a blocklist of real names would not change that — it would only look as though
+it had. In the three states this repository sorts every rule into: the shapes and the
+identity are **enforced**; reading for abstraction stays a **behaviour rule** with nothing
+behind it. The hook says so itself, in every report it prints.
+
+It fails closed. Every way it can fail to finish — a git command that errors, an identity
+this clone never set, a temporary directory it cannot create — ends in a refused push,
+because a gate that waves you through when it breaks is indistinguishable from one that
+checked. A check that could not run is reported apart from a finding, and no override covers
+it: "I could not look" and "I looked and found nothing" must never share an exit code.
+
+`git push --no-verify` skips every hook silently, and the script cannot see that it happened.
+`IMPRINT_PUSH_ANYWAY='reason' git push` is the loud alternative — the findings are printed in
+full, the reason is echoed back, and the push proceeds.
+
 ## License
 
 MIT, and it covers the whole work – the prose as much as any code. The MIT text speaks of
