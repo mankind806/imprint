@@ -1,0 +1,21 @@
+{
+  "name": "imprint",
+  "description": "Working rules for running several coding agents without them ruining each other's work. Ships the delegation contract (who leads, who advises, readers in parallel and exactly one writer), the blind-first-pass discipline that makes a second opinion worth asking for, and the habit of measuring a property before asserting it. Every rule states what enforces it, or says plainly that nothing does.",
+  "version": "0.1.0",
+  "author": {
+    "name": "mankind806"
+  },
+  "homepage": "https://github.com/mankind806/imprint",
+  "repository": "https://github.com/mankind806/imprint",
+  "license": "MIT",
+  "keywords": [
+    "multi-agent",
+    "delegation",
+    "orchestration",
+    "subagents",
+    "code-review",
+    "second-opinion",
+    "verification",
+    "working-rules"
+  ]
+}

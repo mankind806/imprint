@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "imprint",
+  "description": "This repository is its own marketplace and carries exactly one plugin: imprint, a set of working rules for multi-agent collaboration.",
+  "owner": {
+    "name": "mankind806"
+  },
+  "plugins": [
+    {
+      "name": "imprint",
+      "source": "./",
+      "description": "Working rules for multi-agent collaboration: the delegation contract, the blind first pass, and measuring before asserting.",
+      "category": "workflow"
+    }
+  ]
+}
