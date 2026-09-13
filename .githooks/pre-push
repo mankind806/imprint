@@ -163,7 +163,7 @@ printf 'tracked content - %s shape(s) over the trees of all %s commit(s)\n' \
 # A message is as public as a blob, and trailers are where addresses ride in.
 : >"$work/messages"
 while read -r range; do
-  git log --format='%h %s%n%b' "$range" >>"$work/messages" || refuse "git log failed for $range."
+  git log --format='%h|%s%n%b' "$range" >>"$work/messages" || refuse "git log failed for $range."
 done <"$work/ranges"
 shapes | while IFS="$tab" read -r name pattern; do
   grep -a -n -E "$pattern" "$work/messages" > "$work/mhits" 2>/dev/null
