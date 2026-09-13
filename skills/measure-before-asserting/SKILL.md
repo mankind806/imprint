@@ -1,6 +1,6 @@
 ---
 name: measure-before-asserting
-description: "Runs, queries or looks the thing up before saying it, and treats your own notes and documentation as a dated snapshot rather than as evidence. Use before stating any property of a system — whether a repository is public, which version is running, what a config actually contains, whether a gate really blocks, whether a path exists, how large something is — before writing a claim into a document or a rule, whenever an assurance sounds careful and was never checked, and when a measurement has just contradicted something you wrote down earlier. Not for deciding who reviews the claim (use blind-first-pass) and not for the mechanics of dispatching the check (use delegation-contract)."
+description: "Runs, queries or looks the thing up before saying it, and treats your own notes and documentation as a dated snapshot rather than as evidence. Use before asserting a property of a system you do not control (whether a repository is public, what a provider's terms now say, which version is running), before describing what one of your own safeguards covers or blocks, before quoting a state that can change without your involvement (what a config contains, whether a gate still fires, what a path holds), and before any claim of those kinds is written into a rule, a README or a handover. Also when an assurance sounds careful and was never checked, and when a measurement has just contradicted something you wrote down earlier. Not for deciding who reviews the claim (use blind-first-pass) and not for the mechanics of dispatching the check (use delegation-contract)."
 ---
 
 # Measure before asserting
@@ -12,6 +12,23 @@ contains, whether an enforcement actually fires, whether a path exists, how big 
 is.
 
 The cost is a few seconds. The alternative is a statement that sounds right.
+
+## Where this bites, and where it does not
+
+A rule that fires on every sentence gets ignored, which is the same outcome as not having
+one. Three kinds of claim are worth the interruption:
+
+- **A property of a system you do not control.** Someone else may have changed it since you
+  last looked, and they owed you no notice.
+- **What one of your own safeguards actually covers.** This is the class nobody audits; the
+  section below on over-cautious assurances is about why.
+- **A state that can change without your involvement** — a configuration, a version, a
+  permission, a path.
+
+A claim of any of those kinds that is about to be **written down** is the strongest trigger
+of all, because writing is what converts it into something other people will quote
+instead of check. Arithmetic you just did, a preference, a judgement call about what to
+build next: not this skill's business.
 
 ## Your own documentation is not a measurement
 
@@ -31,8 +48,10 @@ the system's sharpest safeguard was derived from that — "the channel with the 
 consequence," "not retractable," "only on request." The statement had been internally
 consistent for years, matched how everyone spoke about it, and produced a coherent picture.
 **That is exactly why nobody checked it.** One query to the provider disproved it in two
-seconds: both private. In the same pass a second assurance fell — a permission setting
-described as configured existed in none of the three effective configurations.
+seconds: both private. In the same pass a second assurance fell the same way: a safeguard
+the notes described as in place was not in place anywhere that would have had to carry it.
+Nobody had ever opened those files, because a safeguard that only slows things down is the
+last thing anyone thinks to audit — which is the next section.
 
 Nothing about that story is unusual. A false statement that contradicts its surroundings
 gets caught. A false statement that fits does not.

@@ -4,8 +4,9 @@ A suite of working rules for two things that turn out to be one thing: how sever
 coding agents cooperate without ruining each other's work, and how a knowledge base grows
 alongside the person using it without quietly rotting.
 
-Both are written as mechanisms – what is enforced, what is only agreed, and how you tell
-the two apart – rather than as advice.
+Both are written as mechanisms rather than as advice, and every rule says which of three
+things it is: enforced by something that stops you, *enforceable* but currently resting on
+discipline, or a behaviour rule with nothing behind it at all.
 
 It ships as a Claude Code plugin, so the rules arrive as skills the agent can reach for
 during a session rather than as a document somebody has to remember to open.
@@ -74,8 +75,11 @@ things about that measurement are worth stating rather than glossing:
 
 ## What is in the box
 
-Three skills and one agent. Each skill states, for every rule it carries, what enforces it —
-or says plainly that nothing does.
+Three skills and one agent. Each skill ends with a table that sorts its own rules into three
+states: **enforced** by something that actually stops you, **enforceable but not enforced**
+where a mechanism is possible and nobody has built it, and a plain **behaviour rule** that
+holds only as long as the discipline does. The middle state is the one usually left out, and
+it is the useful one — it is a list of the places where a few lines of tooling would pay.
 
 - **`delegation-contract`** – who leads and who advises, and how a delegated task tells the
   receiver which of the two it is – including why the flag you were invoked with does not
@@ -100,6 +104,20 @@ or says plainly that nothing does.
   point: a prompt asking an agent to stay read-only is a behaviour rule, and behaviour rules
   are broken by exactly the input this agent exists to handle. What it does *not* close is
   named in its own description.
+
+  *That the allowlist is real was measured, not assumed — it is the strongest enforcement
+  claim this repository makes, so it had to be. On 2026-09-13, Claude Code 2.1.269:
+  the plugin was loaded with `--plugin-dir` under an isolated `CLAUDE_CONFIG_DIR`, and a
+  session started with `--agent imprint:foreign-material-reviewer` reported
+  `"tools":["Read","Grep","Glob"]` in its `system/init` event. The identical invocation
+  without `--agent` reported twenty-three tools, among them `Task`, `Bash`, `Write`, `Edit`,
+  `WebFetch` and `WebSearch` — so the narrowing comes from the frontmatter and not from the
+  environment. The init event is emitted before the first API call, and that run never
+  authenticated, so what it shows is the tool set the harness composed rather than a model's
+  account of what it thought it had. Two things it does not show: it exercised the agent at
+  **session scope**, and a subagent dispatch of the same definition is not separately
+  measured; and `mcp_servers` was empty because the isolated configuration had none, which
+  is no evidence either way about MCP tools being filtered. Re-check by 2026-12-13.*
 
 ## The two layers
 
@@ -151,8 +169,13 @@ that a shorter one would be busywork.
   re-located when this section was written.** It is why the agent relies on `tools:` and
   claims nothing else — a conservative choice that costs nothing even if the claim turns out
   to be wrong. "Silently" is the load-bearing word: there would be no error to notice either
-  way, which is precisely why this one wants a measurement rather than a re-reading.
-  *Measure it, or cite a source for it, by 2026-12-13.*
+  way, which is precisely why this one wants a measurement rather than a re-reading. The
+  positive half *is* now measured: in a plugin agent's frontmatter, `tools:` and `model:`
+  are both honoured — see the `foreign-material-reviewer` entry above, where the same run
+  that showed the three-tool allowlist also showed the session running on the model the
+  frontmatter names rather than the session default. So plugin agent frontmatter is read
+  **selectively**, and which fields survive is a per-field question.
+  *Measure the three ignored fields, or cite a source for them, by 2026-12-13.*
 
 One further gap is named inside `delegation-contract` rather than here, because it is a
 property of the rules and not of the packaging: a triage agent's *findings* flow back into

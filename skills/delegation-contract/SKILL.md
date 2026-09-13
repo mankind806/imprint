@@ -1,6 +1,6 @@
 ---
 name: delegation-contract
-description: "Decides who leads and who advises before any agent is dispatched, writes the delegation header that tells the receiver which of the two it is, and holds the invariant that readers run in parallel while exactly one writer holds the pen. Use when handing work to a subagent or another model, when writing an orchestrator prompt, when two agents might touch the same files, when a dispatched agent reports success you have not verified, when you are unsure whether you are the leading agent or an advisor, or when a delegated task could push, publish, deploy or otherwise reach outside the repository in a way nothing afterwards retracts. Not for deciding whether a second opinion is worth asking for (use blind-first-pass) and not for verifying a factual claim (use measure-before-asserting)."
+description: "Decides who leads and who advises before any agent is dispatched, writes the delegation header that tells the receiver which of the two it is, and holds the invariant that readers run in parallel while exactly one writer holds the pen. Use when you are constructing a dispatch — fixing the receiver's role, its write and outward rights, its ambiguity policy and its return format — when writing an orchestrator prompt, when two agents might touch the same files, when a dispatched agent reports success you have not verified, when you are unsure whether you are the leading agent or an advisor, or when a delegated task could push, publish, deploy or otherwise reach outside the repository in a way nothing afterwards retracts. Sending a diff out for review triggers this skill and blind-first-pass at the same time, which is correct and not a conflict: this one builds the envelope, that one decides what goes inside it. Not for choosing what a reviewer may see or whether a second opinion is worth having at all (use blind-first-pass) and not for verifying a factual claim (use measure-before-asserting)."
 ---
 
 # The delegation contract
@@ -147,11 +147,17 @@ Be honest about the difference, because the shape of the mistake changes with it
 
 | Rule | Enforcement |
 |---|---|
-| A read-only agent cannot write | **Enforced** — the `tools:` allowlist in agent frontmatter is a real allowlist. A prompt that says "you are read-only" is not. |
-| A dispatched agent cannot reach the network | **Enforced** by the same allowlist when it leaves out every tool that can reach outward — in Claude Code that is at least Bash, WebFetch, WebSearch, any MCP tool, and `Agent`, which needs no network itself but can dispatch something that has one. Enumerate what you *allowed*; a list of what you meant to forbid is already incomplete by the next release. With no allowlist on the dispatch it is a behaviour rule. |
+| A read-only agent cannot write | **Enforced** — the `tools:` allowlist in agent frontmatter is a real allowlist, and that is measured rather than assumed: this plugin's own `foreign-material-reviewer`, whose frontmatter declares `Read, Grep, Glob`, started with exactly those three tools, where the identical session without it had twenty-three including `Write`, `Edit` and `Bash`. *(Claude Code 2.1.269, 2026-09-13; measured at session scope. Whether a subagent dispatch of the same definition is filtered identically is not separately measured — re-check by 2026-12-13.)* A prompt that says "you are read-only" is not an allowlist. |
+| A dispatched agent cannot reach the network | **Enforced** by the same allowlist when it leaves out every tool that can reach outward — in Claude Code that is at least Bash, WebFetch, WebSearch, any MCP tool, and the subagent-dispatch tool, which needs no network itself but can dispatch something that has one. Check what your build calls that last one: the session measured above listed it as `Task`, other builds name it `Agent`. Enumerate what you *allowed*; a list of what you meant to forbid is already incomplete by the next release. With no allowlist on the dispatch it is a behaviour rule. |
 | Exactly one writer at a time | **Behaviour rule.** Nothing stops a second dispatch. |
 | The delegation header is present | **Behaviour rule.** |
 | A human said yes before an irreversible outward action | **Behaviour rule.** A gate can block a destination — a branch protection rule, a deny entry, a missing credential. It cannot know whether anyone agreed. |
+
+Read that table as three states rather than two. The network row is the middle one in
+motion: the same rule is a mechanism or a good intention depending on whether the dispatch
+actually carried an allowlist. **Enforceable, not enforced** is a legitimate place for a
+rule to sit, and it has to be said out loud, because it is the only state that tells you
+where a small piece of tooling would convert discipline into a mechanism.
 
 A rule with no enforcement is not thereby worthless — it is worth exactly as much as the
 discipline behind it, and saying so out loud is the point. A rule silently presented as

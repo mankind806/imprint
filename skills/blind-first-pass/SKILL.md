@@ -1,6 +1,6 @@
 ---
 name: blind-first-pass
-description: "Sets up a second opinion so it is worth having: the reviewing voice gets the reproduction, the raw numbers and the diff, but not your hypothesis, your discarded alternatives or the order you thought in. Use when asking another model or agent to review, when consulting a stronger model at a decision point, when two agents disagree and you are tempted to average them, when a review keeps agreeing with you, or when deciding whether a question wants a second opinion at all rather than a second measurement. Not for the mechanics of dispatching (use delegation-contract) and not for checking a single fact yourself (use measure-before-asserting)."
+description: "Sets up a second opinion so it is worth having: the reviewing voice gets the reproduction, the raw numbers and the diff, but not your hypothesis, your discarded alternatives or the order you thought in. Use when you are deciding what goes into a reviewer's context and what stays out of it, when deciding whether a second voice is worth asking for at all rather than a second measurement, when consulting a stronger model at a decision point, when two agents disagree and you are tempted to average them, or when a review keeps agreeing with you. Sending a diff out for review triggers this skill and delegation-contract at the same time, which is correct and not a conflict: that one builds the envelope — role, rights, exactly one writer — and this one decides what goes inside it. Not for the role line, the write permission or the mechanics of dispatching (use delegation-contract) and not for checking a single fact yourself (use measure-before-asserting)."
 ---
 
 # The blind first pass
@@ -118,10 +118,39 @@ same agent; resampling is not diagnosis, and `measure-before-asserting` says why
 | Rule | Enforcement |
 |---|---|
 | The reviewer does not see your reasoning | **Enforced** by the context boundary — but only for a dispatch that starts a fresh context. A context-inheriting dispatch (Claude Code's `fork`) enforces the opposite, and the wrong choice is silent. Check which one your dispatch is. Asking a model to ignore what it already read enforces nothing. |
-| The reviewer's sample was not chosen by the author | **Enforceable** — have the tool draw it. Usually left as a behaviour rule. |
+| The reviewer's sample was not chosen by the author | **Enforceable, not enforced** — have the tool draw the sample. Nothing does it for you today. |
 | Stages A/B/C in order | **Behaviour rule.** |
 | Disagreement is surfaced rather than averaged | **Behaviour rule**, and the one most quietly broken, because a smoothed summary reads better than a table. |
+
+Three states, not two. Row two is the middle one: a rule that *could* be mechanical — a
+script picks the diff hunks, not the author — and today is not. That state deserves its own
+name rather than being rounded up to "enforced" or down to "we try". It is also the only one
+of the three that tells you where a few lines of tooling would pay.
+
+## Zero findings, and the pressure it creates
 
 A review that produces zero findings on a non-trivial artefact in its first round is itself
 a finding: either the disclosure was not blind, or the task was phrased as a request for
 approval.
+
+**The remedy is to re-examine those two things. It is never to produce a finding.** Stated
+without that limit, the heuristic becomes a quota, and a reviewer under a quota invents —
+which costs strictly more than the empty round it was meant to prevent, because an invented
+finding gets read, believed and worked on.
+
+The stopping condition is the shape of the work, not the count. **A reviewer that formed a
+suspicion, went and checked it, and reports it refuted has delivered a full result.** That
+is not an empty round and must not be padded into a full-looking one. The adversarial read
+of this repository did exactly that: it took an unfamiliar agent frontmatter field for a
+defect, went looking, found that a first-party plugin uses the same field in all eight of
+its agents, and reported its own suspicion as disproved rather than filing it. *(The eight
+were counted in the published `claude-security` plugin's agent files on 2026-09-13.)*
+
+So there are two honest ways for a round to end without a defect, and only one of them is
+the finding above:
+
+- the reviewer looked, formed hypotheses, tested them and they failed — report the tested
+  hypotheses and what refuted them, and the round is done;
+- the reviewer found nothing to be suspicious *about* — that is the signal that the
+  disclosure or the phrasing was wrong, and the thing to fix is the dispatch, not the
+  artefact.
