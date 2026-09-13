@@ -220,8 +220,13 @@ behind it. The hook says so itself, in every report it prints.
 It fails closed. Every way it can fail to finish — a git command that errors, an identity
 this clone never set, a temporary directory it cannot create — ends in a refused push,
 because a gate that waves you through when it breaks is indistinguishable from one that
-checked. A check that could not run is reported apart from a finding, and no override covers
-it: "I could not look" and "I looked and found nothing" must never share an exit code.
+checked. One empty case is not such a failure and took a refused push to find: git runs the
+hook even when the remote is already up to date, and pipes in an empty ref list. Nothing is
+published in that run, so there is nothing to check, and the hook says so and lets it
+through — but only when git is the one calling, which is a hook invoked with a remote name
+and location and handed a pipe rather than a terminal. An empty list from anything else is
+still refused. A check that could not run is reported apart from a finding, and no override
+covers it: "I could not look" and "I looked and found nothing" must never share an exit code.
 
 `git push --no-verify` skips every hook silently, and the script cannot see that it happened.
 `IMPRINT_PUSH_ANYWAY='reason' git push` is the loud alternative — the findings are printed in

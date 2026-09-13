@@ -33,8 +33,15 @@
 # loud alternative: the findings are printed in full, the reason is echoed
 # back, and the push proceeds.
 #
-# FAIL-CLOSED. Every way this script can fail to finish - a git command that
-# errors, an unset identity, a temporary file it cannot create - ends in a
+# NOTHING TO PUSH. Git runs this hook even when every ref is already up to
+# date, and then pipes in an empty ref list. That is not a failure to read the
+# input: it is git saying that nothing new leaves the machine, so there is
+# nothing here to check and the push proceeds. An empty list from something
+# that is not git - no remote name and location in the arguments, or a terminal
+# on standard input - is a hook that was handed nothing, and is still refused.
+#
+# FAIL-CLOSED. Every other way this script can fail to finish - a git command
+# that errors, an unset identity, a temporary file it cannot create - ends in a
 # refused push. A gate that waves you through when it breaks is worse than no
 # gate, because it is indistinguishable from one that checked.
 
@@ -42,6 +49,12 @@ set -u
 
 say() { printf '%s\n' "$*" >&2; }
 refuse() { say "pre-push: $*"; say "pre-push: refusing the push."; exit 1; }
+
+# Git calls this hook with exactly two parameters - the name and the location of
+# the destination remote - and pipes the ref list in. Without them, or with a
+# terminal on standard input, whatever is running this is not a push, and an
+# empty ref list from it says nothing about what is being published.
+if [ "$#" -eq 2 ] && [ ! -t 0 ]; then git_is_calling=yes; else git_is_calling=no; fi
 
 work="$(mktemp -d 2>/dev/null)" || refuse "could not create a working directory."
 trap 'rm -rf "$work"' EXIT
@@ -58,8 +71,14 @@ git config --get-all imprint.allowedIdentity >>"$work/allowed" 2>/dev/null || tr
 # --- what is being pushed ----------------------------------------------------
 zero="$(git hash-object --stdin </dev/null | sed 's/./0/g')" || refuse "git hash-object failed."
 lines=0
-while read -r local_ref local_oid remote_ref remote_oid; do
-  [ -n "${local_oid:-}" ] || continue
+# The `|| [ -n ... ]` catches a last line with no newline after it, which read
+# reports as a failure although it filled the variables. A line that arrives
+# but does not parse is refused rather than skipped: after the loop, lines=0
+# has to mean that git sent no bytes at all, or an unreadable input would wear
+# the face of an up-to-date remote.
+while read -r local_ref local_oid remote_ref remote_oid || [ -n "${local_ref:-}" ]; do
+  [ -n "${local_oid:-}" ] || refuse \
+    "could not read this as a ref line from git: \"${local_ref:-}\"."
   lines=$((lines + 1))
   if [ "$local_oid" = "$zero" ]; then
     printf 'deletion of %s - a deletion carries no new content\n' "${remote_ref:-?}" >>"$work/skipped"
@@ -69,7 +88,11 @@ while read -r local_ref local_oid remote_ref remote_oid; do
     printf '%s..%s\n' "$remote_oid" "$local_oid" >>"$work/ranges"
   fi
 done
-[ "$lines" -gt 0 ] || refuse "git supplied no refs on standard input; a silent empty run is not a pass."
+if [ "$lines" -eq 0 ]; then
+  [ "$git_is_calling" = yes ] || refuse \
+    "no refs on standard input, and nothing says git piped them in; a silent empty run is not a pass."
+  printf 'every ref - git listed none to push, so nothing is being published\n' >>"$work/skipped"
+fi
 
 if [ ! -s "$work/ranges" ]; then
   say "pre-push: checks that ran: none needed."
