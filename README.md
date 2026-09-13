@@ -64,13 +64,13 @@ followed by both the qualified and the bare `install` succeeded, and `claude
 things about that measurement are worth stating rather than glossing:
 
 - It exercised a **local path**, not the `mankind806/imprint` shorthand, which adds a clone
-  step before the same resolution. That shorthand has since been measured on its own, after
-  the first push and from an isolated configuration: `claude plugin marketplace add
-  mankind806/imprint` cloned over HTTPS and validated, `claude plugin install imprint@imprint`
-  reported success, and a session started afterwards listed all three skills and the agent —
-  loaded out of the installed plugin cache, not out of any checkout. A marketplace whose
-  plugin `source` is the repository root therefore does resolve over the network; had it not,
-  the failure would have been at install time and total.
+  step before the same resolution. That shorthand has since been measured on its own —
+  2026-09-13, Claude Code 2.1.269, after the first push, from an isolated configuration.
+  `marketplace add mankind806/imprint` cloned over HTTPS and validated, the qualified
+  `install` reported success, and a session started afterwards listed all three skills and
+  the agent, loaded out of the installed plugin cache rather than out of any checkout. So a
+  marketplace whose plugin `source` is the repository root does resolve over the network;
+  had it not, the failure would have been at install time and total.
 - Whether the bare `install imprint` stays unambiguous depends on the other marketplaces
   *you* have added. It was measured with no competing plugin of that name present, which is
   the only condition under which the shorthand is meaningful at all. If you already have an
@@ -78,10 +78,10 @@ things about that measurement are worth stating rather than glossing:
 
 ## What is in the box
 
-Three skills and one agent. Each skill ends with a table that sorts its own rules into three
-states: **enforced** by something that actually stops you, **enforceable but not enforced**
-where a mechanism is possible and nobody has built it, and a plain **behaviour rule** that
-holds only as long as the discipline does. The middle state is the one usually left out, and
+Three skills and one agent. Each skill carries a section on what actually enforces it, and
+sorts every rule it holds into one of three states: **enforced** by something that really
+stops you, **enforceable but not enforced** where a mechanism is possible and nobody has
+built it, and a plain **behaviour rule** that holds only as long as the discipline does. The middle state is the one usually left out, and
 it is the useful one — it is a list of the places where a few lines of tooling would pay.
 
 - **`delegation-contract`** – who leads and who advises, and how a delegated task tells the

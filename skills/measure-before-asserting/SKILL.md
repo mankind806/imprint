@@ -50,8 +50,9 @@ consistent for years, matched how everyone spoke about it, and produced a cohere
 **That is exactly why nobody checked it.** One query to the provider disproved it in two
 seconds: both private. In the same pass a second assurance fell the same way: a safeguard
 the notes described as in place was not in place anywhere that would have had to carry it.
-Nobody had ever opened those files, because a safeguard that only slows things down is the
-last thing anyone thinks to audit — which is the next section.
+Nobody had opened the configurations that would have had to carry it, because a safeguard
+that only slows things down is the last thing anyone thinks to audit — the next section is
+about that class.
 
 Nothing about that story is unusual. A false statement that contradicts its surroundings
 gets caught. A false statement that fits does not.
