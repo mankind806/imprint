@@ -1,6 +1,6 @@
 ---
 name: blind-first-pass
-description: "Sets up a second opinion so it is worth having: the reviewing voice gets the reproduction, the raw numbers and the diff, but not your hypothesis, your discarded alternatives or the order you thought in. Use when you are deciding what goes into a reviewer's context and what stays out of it, when deciding whether a second voice is worth asking for at all rather than a second measurement, when consulting a stronger model at a decision point, when two agents disagree and you are tempted to average them, or when a review keeps agreeing with you. Sending a diff out for review triggers this skill and delegation-contract at the same time, which is correct and not a conflict: that one builds the envelope — role, rights, exactly one writer — and this one decides what goes inside it. Not for the role line, the write permission or the mechanics of dispatching (use delegation-contract), not for checking a single fact yourself (use measure-before-asserting), and not for how a fact is stored, sourced, replaced or aged once it is written down (use one-canonical-place, provenance-on-entry, supersede-dont-delete and knowledge-ages)."
+description: "Sets up a second opinion so it is worth having: the reviewing voice gets the reproduction, the raw numbers and the diff, but not your hypothesis, your discarded alternatives or the order you thought in. Use when you are deciding what goes into a reviewer's context and what stays out of it, when deciding whether a second voice is worth asking for at all rather than a second measurement, when consulting a stronger model at a decision point, when two agents disagree and you are tempted to average them, or when a review keeps agreeing with you. Sending a diff out for review triggers this skill and delegation-contract at the same time, which is correct and not a conflict: that one builds the envelope — role, rights, exactly one writer — and this one decides what goes inside it. Not for the role line, the write permission or the mechanics of dispatching (use delegation-contract), not for checking a single fact yourself (use measure-before-asserting), not for closing the session the review happened in (use session-handover), and not for how a fact is stored, sourced, replaced or aged once it is written down (use one-canonical-place, provenance-on-entry, supersede-dont-delete and knowledge-ages)."
 ---
 
 # The blind first pass
@@ -119,13 +119,16 @@ same agent; resampling is not diagnosis, and `measure-before-asserting` says why
 |---|---|
 | The reviewer does not see your reasoning | **Enforced** by the context boundary — but only for a dispatch that starts a fresh context. A context-inheriting dispatch (Claude Code's `fork`) enforces the opposite, and the wrong choice is silent. Check which one your dispatch is. Asking a model to ignore what it already read enforces nothing. |
 | The reviewer's sample was not chosen by the author | **Enforceable, not enforced** — have the tool draw the sample. Nothing does it for you today. |
-| Stages A/B/C in order | **Behaviour rule.** |
+| Stages A/B/C in order | **Behaviour rule**. |
 | Disagreement is surfaced rather than averaged | **Behaviour rule**, and the one most quietly broken, because a smoothed summary reads better than a table. |
 
-Three states, not two. Row two is the middle one: a rule that *could* be mechanical — a
-script picks the diff hunks, not the author — and today is not. That state deserves its own
-name rather than being rounded up to "enforced" or down to "we try". It is also the only one
-of the three that tells you where a few lines of tooling would pay.
+Four states, not two, and this table uses three of them. Row two is the middle one: a rule
+that *could* be mechanical — a script picks the diff hunks, not the author — and today is not.
+That state deserves its own name rather than being rounded up to "enforced" or down to "we
+try". It is also the only one of the four that tells you where a few lines of tooling would
+pay. The fourth, **reserved to a person**, has no row here, because nothing in this skill is
+a consent step; `supersede-dont-delete` and `delegation-contract` are where it earns its
+place.
 
 ## Zero findings, and the pressure it creates
 

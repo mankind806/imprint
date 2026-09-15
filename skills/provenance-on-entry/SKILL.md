@@ -94,16 +94,16 @@ states say what is *possible*, which is the useful distinction.
 
 | Rule | Enforcement |
 |---|---|
-| Some origin is present on the entry | **Enforceable, not enforced.** A write path that refuses an entry with an empty origin field is a real mechanism and a small one. But note its shape before you trust it: it covers **only the writes that go through it.** The same file opened in an editor bypasses it completely, and there is no way to close that from inside the tool — so even where this row reads "enforced" in some system, it means "enforced on one of two paths", and the rule applies unchecked on the other. |
-| The origin named is the true one | **Split, and the halves land in different states.** That the named source *exists* — a file at that path, a snapshot with that date, a reachable page — is decidable, and so is whether a quoted string occurs in it: both are **enforceable, not enforced**, and both are worth building before the harder half is written off. Whether the source actually *says what the entry claims* is a question about meaning, and for that half no mechanism is possible; it is a **behaviour rule**. Stating the whole row as impossible concedes the cheap half along with the expensive one. |
+| Some origin is present on the entry | **Enforceable, not enforced**. A write path that refuses an entry with an empty origin field is a real mechanism and a small one. But note its shape before you trust it: it covers **only the writes that go through it.** The same file opened in an editor bypasses it completely, and there is no way to close that from inside the tool — so even where this row reads "enforced" in some system, it means "enforced on one of two paths", and the rule applies unchecked on the other. |
+| The origin named is the true one | **Enforceable, not enforced** for the half that is decidable; **Behaviour rule** for the half that is not. That the named source *exists* — a file at that path, a snapshot with that date, a reachable page — is decidable, and so is whether a quoted string occurs in it: both are worth building before the harder half is written off. Whether the source actually *says what the entry claims* is a question about meaning, and no mechanism reaches it. Stating the whole row as impossible concedes the cheap half along with the expensive one. |
 | The method is stated, not just the source | **Enforceable, not enforced** — a fixed vocabulary of methods in a required field would do it, and would also make the field machine-readable for the ageing rule. Nothing here has one. |
 | A due date is recorded separately from the recording date | **Enforceable, not enforced** for the *separation*: two fields instead of one is a schema decision, and a schema can refuse an entry that has a deadline in prose and only one date. |
-| The right date went in each field | **Behaviour rule.** Two dates are two dates; no checker knows which is which. This half stays yours no matter how good the schema is. |
-| Attribution sits in the same point as the claim | **Behaviour rule.** Concerns the shape of a passage; a checker for it is not in sight. |
+| The right date went in each field | **Behaviour rule**. Two dates are two dates; no checker knows which is which. This half stays yours no matter how good the schema is. |
+| Attribution sits in the same point as the claim | **Behaviour rule**. Concerns the shape of a passage; a checker for it is not in sight. |
 
-*Measured 2026-09-15: this repository contains prose, one plugin manifest and one pre-push
-script; that script checks commit identity and personal-data shapes and nothing about entry
-structure. Every "enforceable" above is unbuilt here. Re-check by 2026-12-15.*
+*Measured 2026-09-15: the only script this repository ships runs at push time and checks
+commit identity and personal-data shapes, and nothing about entry structure. Every
+"enforceable" above is unbuilt here. Re-check by 2026-12-15.*
 
 ## A cheap check before you record a fact
 

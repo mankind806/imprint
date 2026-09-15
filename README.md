@@ -40,20 +40,26 @@ That does not make either layer complete. It makes the announced part of it real
 
 The skills here were practice before they were text, which is the right order but means the
 text lags the practice. **All eight have now had at least one adversarial read by a party that
-did not write them** — the three agent-collaboration skills earlier, and the four knowledge
-skills on 2026-09-15. That round produced seventeen findings, an independent acceptance check
-added an eighteenth, and sixteen of the eighteen are worked in here. Of the two that remain,
-one is half done — the class of externally set value is described but not given the binding
-enumeration its source has — and the other is a measurement still owed: every skill
-description in this release runs past a thousand characters, and whether any limit truncates
-them has been observed in one runtime and never checked against a specification. *Re-check by
-2026-12-15.* This repository's own rule is that zero findings in a
-first adversarial round on a non-trivial artefact is itself a finding, so a round that found
-seventeen is the expected outcome rather than a bad sign — and three of them were places where
-a stranger following the text would have done the wrong thing, which is the class that
-mattered. **`session-handover` is the exception and says so: it is new in this release and has
-had no adversarial read at all**, which by the standard of the previous sentence is a gap and
-not a detail. Expect the structure to move again before it settles.
+did not write them** — the three agent-collaboration skills earliest, the four knowledge
+skills on 2026-09-15, and `session-handover` later the same day, in a round of its own that
+also re-read the seven around it.
+
+This repository's own rule is that zero findings in a first adversarial round on a non-trivial
+artefact is itself a finding, and no round here has come close to zero. What those rounds are
+worth saying is not how many were closed but **what is still open**:
+
+- **Whether any limit truncates a skill description.** Every description in this release runs
+  past a thousand characters; the longest is a little over eighteen hundred. That they load has
+  been observed in one runtime. No specification for a limit has been located either way.
+  *Re-check by 2026-12-15.*
+- **The remaining rows that say no mechanism exists have not been re-searched.** The most
+  recent round found two places where this repository declared a mechanism impossible or
+  harmful and was wrong both times, because nobody had gone looking — an over-cautious
+  assurance is the kind nothing ever makes fail. Those two are corrected and now say where
+  they looked. The other behaviour-rule rows across the eight skills carry no such sentence
+  yet. *Re-check by 2026-12-15.*
+
+Expect the structure to move again before it settles.
 
 ## Who this is for
 
@@ -109,9 +115,9 @@ about the original measurement are worth stating rather than glossing:
 
 Eight skills and one agent, in the two layers described below. Each skill carries a section
 on what actually enforces it, and sorts every rule it holds into one of four states:
-**enforced** by something that really stops you, **enforceable but not enforced** where a
+**enforced** by something that really stops you, **enforceable, not enforced** where a
 mechanism is possible and nobody has built it, **reserved to a person** where the rule's
-content is a handover to a human rather than a mechanism nobody wrote, and a plain **behaviour
+content *is* a person's decision rather than a mechanism nobody wrote, and a plain **behaviour
 rule** that holds only as long as the discipline does.
 
 The second state is the one usually left out, and it is the most useful one — it is a list of
@@ -149,9 +155,11 @@ writing code.
   mid-air. The four things that are lost if nobody writes them down, and why the one everybody
   does is the least valuable: uncommitted files are visible, while a paused job and an unwritten
   decision are silent. Why the next step is the expensive item — it cannot be re-measured, only
-  re-thought. Why the trigger is the signal rather than a particular phrase, and why a
-  mechanism that fired on the phrase would make the rule worse. Where a handover note's
-  *existence* is a mechanism waiting to be written and its *usefulness* is not.
+  re-thought. Why the trigger is the signal rather than a particular phrase — a mechanism keyed
+  on the phrase would make the rule worse, while one keyed on the *event* is buildable and
+  named here, along with the four observable moments that are the floor. Where a handover
+  note's *existence* and its *form* are mechanisms waiting to be written and its *usefulness*
+  is not. And what the close does when you are the advisor rather than the one holding the pen.
 
 The four that follow are the knowledge layer. They are written to be read in that order:
 each one assumes the one before it, and the last is unusable without the second.
@@ -237,7 +245,7 @@ strongly than that gets switched off by the first person it interrupts, which le
 a gate nor a warning.
 
 The other half of that item — *an explicit note wherever nothing but discipline holds a rule
-in place* — was always the stronger half, and it is already delivered: it is the three-state
+in place* — was always the stronger half, and it is already delivered: it is the four-state
 section that every skill here carries, and the reason the middle state has its own name.
 
 The second layer needs the first, which is why it is second. A knowledge base with several

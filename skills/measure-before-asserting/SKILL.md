@@ -137,14 +137,23 @@ the correct action.
 
 ## What actually enforces this
 
-Nothing, and a tool is not possible. No checker can determine whether a spoken claim was
-measured beforehand — it sees only the result, and a guessed value can happen to be right.
-This is an explicit **behaviour rule**.
+The central rule is a behaviour rule and that will not change. But this skill also carries a
+procedure now, and a procedure has parts that a mechanism reaches — so the section is a table
+like every other one here rather than a single sentence that writes all of it off.
 
-What *is* measurable is the stock: **statements about foreign surfaces in your own documents
-that carry no measurement date.** That number can be counted, tracked and driven down. Pick
-that as the metric rather than "did the agent check" — the first is observable and the second
-is not.
+| Rule | Enforcement |
+|---|---|
+| A claim was measured before it was spoken | **Behaviour rule**, and no mechanism is possible. No checker can determine whether a spoken claim was measured beforehand — it sees only the result, and a guessed value can happen to be right. This row is the reason this section used to say "nothing", and it is the only row for which that answer was ever correct. |
+| The class of values never answered from storage is written down as a list | **Enforceable, not enforced**. A criterion re-applied from memory decides borderline cases inconsistently, which is why the section above asks for a list rather than a habit. A list is a file; a retrieval path can read it and mark an entry as belonging to the class. Nothing here ships one, and the rule deliberately stops at the shape, because a list naming real authorities would go stale faster here than in the system using it. |
+| Statements about foreign surfaces carry a measurement date | **Enforceable, not enforced**, and this is the cheapest row: scanning your own documents for an assurance about something you do not control that carries no date is a short script, and the result is a number that can be tracked and driven down. Pick that as the metric rather than "did the agent check" — the first is observable and the second is not. |
+| A look-up that differs from the store supersedes the entry in the same move | **Enforceable, not enforced**. The quiet failure is an answer that is right while the store keeps the wrong value for the next reader. A write path that will not close a corrected answer without also writing the replacement is a real mechanism; so is a check that lists entries contradicted by a retrieval recorded later than they were. Neither exists here. |
+| The stored state is consulted silently, before the look-up rather than after | **Behaviour rule**. The order is the rule, and nothing observes the order in which a party thought. A figure once spoken lands, and a caveat after it does not retract it — which is exactly the kind of failure no log shows. |
+| An assurance says what it does **not** cover | **Behaviour rule**. Whether a stated limit is the real one is a judgement about meaning. A checker can see that a sentence about coverage exists; it cannot see that it is honest. |
+| An unmeasurable thing is reported as unmeasured rather than guessed cautiously | **Behaviour rule**, and the one this skill exists for. A cautious-sounding wrong answer and a measured right one are the same shape on the page, which is why the over-cautious assurance is the dangerous class — nothing ever makes it fail. |
+
+*Measured 2026-09-15: nothing in this repository executes any of the enforceable rows. The one
+script it ships runs at push time and checks commit identity and personal-data shapes.
+Re-check by 2026-12-15.*
 
 ## A cheap check before you assert
 

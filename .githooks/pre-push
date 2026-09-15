@@ -18,7 +18,7 @@
 # behind it, and a blocklist of real names would not change that - it would
 # only look as though it had.
 #
-# In the repository's own three-way vocabulary: enforced, for the shapes named
+# In the repository's own four-state vocabulary: enforced, for the shapes named
 # above and for the identity, and for nothing else.
 #
 # INSTALL - per clone, and it does not arrive with one:
