@@ -75,15 +75,25 @@ when a task matches their description.
 
 *Measured 2026-09-13 on Claude Code 2.1.269, against a local checkout: `marketplace add`
 followed by both the qualified and the bare `install` succeeded, and `claude
---plugin-dir … -p` lists all three skills and the agent under the `imprint:` prefix.* Two
-things about that measurement are worth stating rather than glossing:
+--plugin-dir … -p` lists all three skills and the agent under the `imprint:` prefix.* That
+measurement stands as taken and the repository has grown past it: there were three skills
+then and there are eight now. **Re-measured 2026-09-15 on Claude Code 2.1.272**, from an
+isolated configuration directory, `--plugin-dir` against this tree at plugin version 0.3.0:
+the `system/init` event lists all **eight** skills and the agent under the `imprint:` prefix.
+That run ends in an authentication failure, which is expected and does not affect the
+reading — the init event is emitted before the first API call, so what it shows is the tool
+and skill set the harness composed rather than a model's account of it. Two further things
+about the original measurement are worth stating rather than glossing:
 
 - It exercised a **local path**, not the `mankind806/imprint` shorthand, which adds a clone
   step before the same resolution. That shorthand has since been measured on its own —
   2026-09-13, Claude Code 2.1.269, after the first push, from an isolated configuration.
   `marketplace add mankind806/imprint` cloned over HTTPS and validated, the qualified
-  `install` reported success, and a session started afterwards listed all three skills and
-  the agent, loaded out of the installed plugin cache rather than out of any checkout. So a
+  `install` reported success, and a session started afterwards listed all three skills — the
+  three that existed on that date — and the agent, loaded out of the installed plugin cache
+  rather than out of any checkout. Whether an installed copy of the present release lists all
+  eight the same way is **not** separately measured; only the `--plugin-dir` path above is.
+  *Re-check by 2026-12-15.* So a
   marketplace whose plugin `source` is the repository root does resolve over the network;
   had it not, the failure would have been at install time and total.
 - Whether the bare `install imprint` stays unambiguous depends on the other marketplaces
