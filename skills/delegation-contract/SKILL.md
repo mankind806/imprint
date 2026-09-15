@@ -1,6 +1,6 @@
 ---
 name: delegation-contract
-description: "Decides who leads and who advises before any agent is dispatched, writes the delegation header that tells the receiver which of the two it is, and holds the invariant that readers run in parallel while exactly one writer holds the pen. Use when you are constructing a dispatch — fixing the receiver's role, its write and outward rights, its ambiguity policy and its return format — when writing an orchestrator prompt, when two agents might touch the same files, when a dispatched agent reports success you have not verified, when you are unsure whether you are the leading agent or an advisor, or when a delegated task could push, publish, deploy or otherwise reach outside the repository in a way nothing afterwards retracts. Sending a diff out for review triggers this skill and blind-first-pass at the same time, which is correct and not a conflict: this one builds the envelope, that one decides what goes inside it. Not for choosing what a reviewer may see or whether a second opinion is worth having at all (use blind-first-pass) and not for verifying a factual claim (use measure-before-asserting)."
+description: "Decides who leads and who advises before any agent is dispatched, writes the delegation header that tells the receiver which of the two it is, holds the invariant that readers run in parallel while exactly one writer holds the pen, and settles which model the dispatch goes to and how long that choice stays valid. Use when you are constructing a dispatch — fixing the receiver's role, its write and outward rights, its ambiguity policy and its return format — when writing an orchestrator prompt, when two agents might touch the same files, when a dispatched agent reports success you have not verified, when you are unsure whether you are the leading agent or an advisor, when you are about to send mechanical work to an expensive model or a judgement call to a cheap one, when a dispatch has just failed a gate and you are tempted to retry it unchanged, when your list of which model does which job carries no date on it, or when a delegated task could push, publish, deploy or otherwise reach outside the repository in a way nothing afterwards retracts. Sending a diff out for review triggers this skill and blind-first-pass at the same time, which is correct and not a conflict: this one builds the envelope, that one decides what goes inside it. Not for choosing what a reviewer may see, whether a second opinion is worth having at all, or where in a piece of work a stronger voice earns its latency (use blind-first-pass) and not for verifying a factual claim (use measure-before-asserting)."
 ---
 
 # The delegation contract
@@ -126,6 +126,107 @@ individual evidence, reversibility and independent checking stay small controlle
 whatever the queue looks like. That asymmetry is the one-writer invariant seen from the
 other side.
 
+## Which model, not whether
+
+Once the boundary above has said the work goes out, one question is left, and it is not a
+small one: **to which model.** Delegation runs in two directions and they carry different
+freight.
+
+**Downward goes mechanism.** A search whose shape is already fixed, reading in order to
+extract against a schema, a measurement run to a stated procedure, a script that follows a
+pattern the repository already contains. That work does not get better on a stronger model.
+It gets more expensive, and the extra cost buys a slower answer to a question that was never
+hard.
+
+**Upward goes judgement.** An adversarial read, an open search space, a decision whose error
+is expensive or hard to reverse. What comes back from above is material, not an instruction.
+Where in the work a stronger voice actually earns its latency, and why a second *opinion* is
+not the same purchase as a second *measurement*, is `blind-first-pass`, not this skill.
+
+So before a step the question is no longer *whether* to delegate but **which model — the
+cheapest one that clearly passes.** The dispatch overhead is priced in. It is not a reason
+to keep mechanism in the chair, and "it was quicker myself" buys nothing here either.
+
+### The cheapest model only starts where its output can be judged
+
+Read only the first half and "cheapest that clearly passes" is an invitation to
+under-provision. The condition is the second half: **a cheap model starts where a schema, a
+test, a comparison or a separate check can reliably evaluate what it produced.** Where
+nothing can evaluate the output, price is not the binding constraint, and the choice was
+never free — it only looked free, because a wrong answer in a plausible shape costs nothing
+at the moment it arrives.
+
+On genuine doubt, route **up**, and the reason is an asymmetry in what you will later find
+out. Route up unnecessarily and you see it: the bill says so. Route down wrongly and nothing
+says so, because the run that would have shown the difference is the one you did not make.
+Only one of the two errors is self-reporting, and it is the expensive-looking one.
+
+When that evaluation does fail, **escalate one level rather than repeat the same attempt.**
+The argument is not that a retry always fails — it is that a retry at the same level after a
+verifiable failure has no stated reason to succeed. `measure-before-asserting` puts it as a
+demand: whoever retries names the time-dependent cause they are assuming first, and a model's
+capability is not time-dependent. If you cannot name one, the attempt is a resample dressed
+as a diagnosis. Tie the escalation to a signal that exists outside the model: a failed gate,
+a red test, a check that did not pass. Never to the model's own account of how confident it
+feels — that account is generated by the same thing that produced the answer.
+
+Strong models and adversarial reviews stay reserved for the questions where being wrong costs
+something that is hard to undo: a security boundary, a consistency guarantee, an
+architectural commitment.
+
+One pseudo-saving is worth naming because it looks like routing and is not: the same weights
+reached through a different interface are the same weights. That buys latency and a second
+bill, not a cheaper model and not another perspective.
+
+### Where this bites, and where it does not
+
+This is machinery for a setup that has more than one model to route between — which is most
+of them, including a single subscription that offers three model names under one tool. With a
+single model available there is nothing to choose and nothing to register, and the section
+below describes maintenance of an artefact you do not have.
+
+It also does not apply to the cheapest thing in the room, which is the work you do not
+dispatch at all. Routing a one-line edit to the perfect model is still more expensive than
+making the edit.
+
+### The roster ages, and nothing tells you
+
+Which model is "the cheapest that clearly passes" and which is "the strongest to consult"
+changes with every release on every provider's side. A registry — role to model, each entry
+carrying the date it was last checked — is re-checked on a fixed cadence. Four properties
+make it a mechanism rather than a decoration:
+
+- **The next date is computed from the check date, never stored.** A stored due date is a
+  second number, and a second number can be moved without the check happening.
+- **A missing date counts as due now**, not as "probably still fine". This is the only
+  reading under which a new entry cannot be quietly born already trusted.
+- **An overdue check is a finding**, and it goes wherever findings go in your system — not
+  into an intention.
+- **The registry is yours.** Nothing here ships one. The concrete roster, its cadence and
+  its checker belong in the machinery of the system that does the routing; a rule that named
+  models would be stale in this repository faster than in yours.
+
+Without that cycle you delegate reliably to a model that was superseded months ago, and
+nothing in the output says so. It is the same silent-staleness shape `measure-before-asserting`
+names for a dated check note about a foreign surface — and a roster is exactly such a note,
+about surfaces that vendors move without telling anybody.
+
+**A worked case, and read carefully what it does and does not show.** In one rulebook, a pass
+to shorten the delegation rule dropped the middle of three model levels. Three tiers became
+two, and the change was recorded as a shortening rather than as a rule change, because that
+is what it looked like from inside the edit. Keyword parity did not catch it: none of the
+tracked words had changed. What caught it was counting the separators in the enumerated
+condition — five before, four after.
+
+The case shows that a roster is a maintained text and loses entries the way any text loses
+them: silently, and while looking tidier afterwards. It shows nothing at all about model
+quality — the two levels that survived were not the better ones, they were the ones at the
+ends of the list. And it is not a case for the check date, which is the distinction worth
+holding on to: **a date guards the entry that went stale, not the entry that vanished.** The
+first needs a computed due date, the second needs someone reading the diff for a rule change
+wearing the clothes of a shortening. Two failures, two remedies, and the date does not cover
+both.
+
 ## A subagent's rights are proven at the result, not assumed
 
 "It all runs in subagents" presumes subagents may do what their task requires. That
@@ -151,6 +252,9 @@ Be honest about the difference, because the shape of the mistake changes with it
 | A dispatched agent cannot reach the network | **Enforced** by the same allowlist when it leaves out every tool that can reach outward — in Claude Code that is at least Bash, WebFetch, WebSearch, any MCP tool, and the subagent-dispatch tool, which needs no network itself but can dispatch something that has one. Check what your build calls that last one: the session measured above listed it as `Task`, other builds name it `Agent`. Enumerate what you *allowed*; a list of what you meant to forbid is already incomplete by the next release. With no allowlist on the dispatch it is a behaviour rule. |
 | Exactly one writer at a time | **Behaviour rule.** Nothing stops a second dispatch. |
 | The delegation header is present | **Behaviour rule.** |
+| The cheapest model that clearly passes was the one chosen | **Behaviour rule**, and an unusually blind one: nothing anywhere records which model a dispatch *could* have used. You never find out whether the cheaper one would have passed, because you did not run it — so an error in either direction leaves no trace in the output. What is observable is the gate result afterwards, which is why the rule is phrased against an evaluable output rather than against how hard the task felt. |
+| Escalate one level after a verifiable failure, rather than retry at the same one | **Enforceable, not enforced.** A gate result is already machine-readable, so a wrapper could refuse a second dispatch at the same level after one. Nothing in this plugin does it, and whether a given harness even exposes the chosen model to a hook is **not measured here** — re-check by 2026-12-13, and re-date rather than drop it. |
+| Every roster entry carries a check date; a missing one is due now and an overdue one is a finding | **Enforceable, not enforced — and this plugin ships no roster.** This is the clearest case in the table of a few lines of tooling paying for themselves: read the entries, compute each due date from its check date, exit non-zero on a missing or past one. The rule deliberately stops at the shape, because a registry that named models would go stale here faster than in the system using it. |
 | A human said yes before an irreversible outward action | **Behaviour rule.** A gate can block a destination — a branch protection rule, a deny entry, a missing credential. It cannot know whether anyone agreed. |
 
 Read that table as three states rather than two. The network row is the middle one in
@@ -158,6 +262,12 @@ motion: the same rule is a mechanism or a good intention depending on whether th
 actually carried an allowlist. **Enforceable, not enforced** is a legitimate place for a
 rule to sit, and it has to be said out loud, because it is the only state that tells you
 where a small piece of tooling would convert discipline into a mechanism.
+
+Two of the three model rows are in that middle state, and they are in it for opposite
+reasons. The roster check is unbuilt because nobody has written twenty lines of script; the
+escalation rule is unbuilt because it is not yet measured whether the harness hands a hook
+the one fact it would need. The first is a chore and the second is a question, and collapsing
+them into "we try" would hide which of the two is in front of you.
 
 A rule with no enforcement is not thereby worthless — it is worth exactly as much as the
 discipline behind it, and saying so out loud is the point. A rule silently presented as

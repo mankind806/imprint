@@ -89,7 +89,11 @@ it is the useful one — it is a list of the places where a few lines of tooling
   answer that question. The header to put in front of a dispatch. Readers in parallel,
   exactly one writer at a time, and where "do not do it yourself" stops. Why a subagent's
   own success report does not count as evidence that it wrote anything, and why a required
-  human yes does not travel with a delegation.
+  human yes does not travel with a delegation. Which model the dispatch goes to once the
+  size question is settled — mechanism downward, judgement upward, the cheapest one that
+  clearly passes, and the condition that stops "cheapest" from meaning "under-provisioned".
+  Why a roster of which model does which job needs a check date computed rather than stored,
+  and goes stale silently without one.
 
 - **`blind-first-pass`** – how to set up a second opinion so it is worth having. Staged
   disclosure: the reproduction and the numbers first, your hypothesis last. Why a
