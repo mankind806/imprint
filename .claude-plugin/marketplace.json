@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "imprint",
-  "description": "This repository is its own marketplace and carries exactly one plugin: imprint, a set of working rules for multi-agent collaboration.",
+  "description": "This repository is its own marketplace and carries exactly one plugin: imprint, a set of working rules for multi-agent collaboration and for knowledge that has to stay provable.",
   "owner": {
     "name": "mankind806"
   },
@@ -9,7 +9,7 @@
     {
       "name": "imprint",
       "source": "./",
-      "description": "Working rules for multi-agent collaboration: the delegation contract, the blind first pass, and measuring before asserting.",
+      "description": "Working rules in two layers: multi-agent collaboration (the delegation contract, the blind first pass, measuring before asserting) and recorded knowledge (one canonical place, provenance on entry, superseding instead of deleting, knowledge that ages).",
       "category": "workflow"
     }
   ]

@@ -27,14 +27,21 @@ reach for one mid-flight.
 
 Early, and deliberately partial.
 
-**Only the first layer ships so far**, and only three of its rules. The knowledge-system
-layer sketched below is intent, not content: there is nothing in this repository that
-implements it. Read that section as a statement of direction, not as a description of what
-you get.
+**Both layers now ship.** Three rules in the agent-collaboration layer, four in the
+knowledge layer: the three that the section below announced as shape rather than content,
+plus one for a failure mode named under *Who this is for* — a fact that was true when it was
+recorded and is still being quoted as current. Of the other two things that section
+announced, one was already here, and one turned out to be half delivered and half wrong;
+both are dealt with where they stand rather than quietly dropped.
 
-The three skills that are here were practice before they were text, which is the right
-order but means the text lags the practice. It has now had one adversarial read by a party
-that did not write it; expect the structure to move again before it settles.
+That does not make either layer complete. It makes the announced part of it real.
+
+The skills here were practice before they were text, which is the right order but means the
+text lags the practice. The three agent-collaboration skills have had one adversarial read
+by a party that did not write them. **The four knowledge skills have not, and that is the
+next thing due rather than a detail** — this repository's own rule is that zero findings in
+a first adversarial round on a non-trivial artefact is itself a finding, and four unread
+files cannot claim even that. Expect the structure to move again before it settles.
 
 ## Who this is for
 
@@ -78,7 +85,8 @@ things about that measurement are worth stating rather than glossing:
 
 ## What is in the box
 
-Three skills and one agent. Each skill carries a section on what actually enforces it, and
+Seven skills and one agent, in the two layers described below. Each skill carries a section
+on what actually enforces it, and
 sorts every rule it holds into one of three states: **enforced** by something that really
 stops you, **enforceable but not enforced** where a mechanism is possible and nobody has
 built it, and a plain **behaviour rule** that holds only as long as the discipline does. The middle state is the one usually left out, and
@@ -106,6 +114,36 @@ it is the useful one — it is a list of the places where a few lines of tooling
   The failure mode is plausibility rather than ignorance, and an over-cautious false
   assurance is the dangerous kind because nothing ever makes it fail.
 
+The four that follow are the knowledge layer. They are written to be read in that order:
+each one assumes the one before it, and the last is unusable without the second.
+
+- **`one-canonical-place`** – one authoritative place per fact, every other view generated,
+  linked or embedded rather than copied. Why aligning all the copies of a drifted value
+  perpetuates the defect instead of repairing it, why the scope is any changeable
+  fact rather than only numbers, and why the habit that actually carries the rule is a search
+  performed before writing rather than a check performed afterwards.
+
+- **`provenance-on-entry`** – where an entry came from, recorded when it is written, and
+  *how* it was obtained as the load-bearing half: read, heard, measured, computed or
+  inferred are five different futures for the same number. Why the date of recording is not
+  the deadline and why one date in an entry that needs two looks complete rather than
+  ambiguous. Why attribution collected at the foot of a page is attribution destroyed.
+
+- **`supersede-dont-delete`** – replacing rather than overwriting, so that the one question
+  an overwrite makes unanswerable stays answerable: was the old value wrong, or right at the
+  time and then changed. Completion and follow-up as two lines. And a contradiction as a
+  full stop rather than a merge — including the boundary that keeps that from firing on every
+  routine update, and a plain statement that this rule does not fit the three states at all.
+
+- **`knowledge-ages`** – expiry triggered by use rather than by a schedule, with the
+  dangerous entry being the recent-looking one. Why what ages is decided by the kind of
+  evidence and not the kind of content, so a figure backed by a document does not age and a
+  figure backed by a look-up does. The routing question — who is entitled to change this
+  value — that separates what may expire from what must never be quoted from storage at all.
+  Why confirming an unchanged value is not a replacement, measured from a case where
+  recording it as one made the history report a change where unchangedness had just been
+  established.
+
 - **`foreign-material-reviewer`** (agent) – a read-only triage role for material you did not
   write. Its `tools:` frontmatter is an allowlist of `Read`, `Grep` and `Glob`, which is the
   point: a prompt asking an agent to stay read-only is a behaviour rule, and behaviour rules
@@ -128,7 +166,7 @@ it is the useful one — it is a list of the places where a few lines of tooling
 
 ## The two layers
 
-**Agent collaboration is the foundation, and it is what ships.** Who leads and who advises,
+**Agent collaboration is the foundation, and it shipped first.** Who leads and who advises,
 and how a delegated task tells the receiver which of the two it is. Readers in parallel,
 exactly one writer at a time. When a second opinion adds information and when it only adds
 agreement – and why a closed, checkable question wants an independent measurement rather
@@ -136,17 +174,34 @@ than another opinion. How to put disagreement in front of a human instead of ave
 away. Escalating to a stronger voice rather than resampling the same one after it has
 already failed twice.
 
-**A knowledge system is meant to sit on top. None of it is written yet.** The intended
-shape: one canonical place per fact, with every other view generated, linked or embedded
-rather than copied. Provenance on every entry, including how it was obtained. Superseding
-instead of deleting, so the replaced state stays provable after the visible one changes.
-Gates that stop an action rather than warn about it, and an explicit note wherever nothing
-but discipline holds a rule in place. And a standing preference for measuring a property
-over citing your own notes about it — the one part of that list which *has* been written,
+**A knowledge system sits on top, and four of its rules now ship.** One canonical place per
+fact, with every other view generated, linked or embedded rather than copied. Provenance on
+every entry, including how it was obtained, and a date something is due kept apart from the
+date it was recorded. Superseding instead of deleting, so the replaced state stays provable
+after the visible one changes. Knowledge that expires when it is reached for rather than on a
+schedule, routed by the question of who is entitled to change a value. And a standing
+preference for measuring a property over citing your own notes about it, which shipped first,
 as `measure-before-asserting`.
 
-The second layer will need the first. A knowledge base with several writers and no rule
-about who holds the pen produces contradictory states that nobody reports.
+**One item that stood in this list has been narrowed rather than built, because practice
+refuted it.** It asked for *gates that stop an action rather than warn about it*, as a
+universal. Where this was measured it is not one: an unattended run — a timer, a session
+start, anything with no person in the loop — fails closed on a finding, while a supervised
+run performs the same checks in full and only warns, deliberately, including where the
+finding is in executable code. The defensible version of the rule is therefore narrower and
+has a measurement in it: **a gate blocks when nobody is watching and warns when somebody is,
+and which of the two you are in is measured rather than assumed.** A rule stated more
+strongly than that gets switched off by the first person it interrupts, which leaves neither
+a gate nor a warning.
+
+The other half of that item — *an explicit note wherever nothing but discipline holds a rule
+in place* — was always the stronger half, and it is already delivered: it is the three-state
+section that every skill here carries, and the reason the middle state has its own name.
+
+The second layer needs the first, which is why it is second. A knowledge base with several
+writers and no rule about who holds the pen produces contradictory states that nobody
+reports — and every rule in the knowledge layer is about keeping a fact answerable, which a
+silent conflicting write defeats before any of them get a turn.
 
 ## Known limits
 

@@ -1,0 +1,115 @@
+---
+name: one-canonical-place
+description: "Keeps every fact in exactly one authoritative place and makes every other view of it generated, linked or embedded rather than copied, so that a correction has one address instead of several. Use when you are about to write a value into a second place — a summary, an index, a dashboard, a status line, a README, a second page that needs the same number — when you are deciding where a changeable fact should live in the first place, when you have just found the same fact in two places disagreeing with each other, when you are correcting a wrong value and have to choose between fixing the source and fixing what it produced, and when a value is about to be repeated because embedding or generating it looked like more work than typing it. Not for whether the value is true or current (use measure-before-asserting), not for recording where it came from (use provenance-on-entry), not for replacing a value that has genuinely changed (use supersede-dont-delete) and not for deciding whether a stored value has gone stale (use knowledge-ages)."
+---
+
+# One canonical place
+
+**Every fact has exactly one authoritative place. Every other view of it is generated,
+linked or embedded — never copied.** A wrong value is fixed at that place, never in
+something the place produced.
+
+This is the cheapest rule in the set to state and the one most often broken by accident,
+because copying a number is never a decision. It is what happens when the alternative
+requires a moment's thought and the number is right there.
+
+## Why copying is a defect and not a convenience
+
+A copied value has no owner. Nothing in either location says which of the two is the one
+that gets maintained, so both do, or neither does — and the way you find out is that they
+have drifted, at the moment you need the value.
+
+The cost is not the drift. The cost is that after the drift you cannot tell **which copy was
+wrong**. Two figures that disagree carry no information about which is current, and
+reconstructing that needs the history of both places, which is exactly what nobody kept.
+
+So the rule is not about tidiness. It is about keeping the number of things that can be
+wrong equal to the number of things that can be fixed.
+
+## The scope is anything that can change
+
+The rule is usually stated for numbers, and stated that way it is too narrow. It covers
+**any fact with a changeable state**: a status, a date, an arrangement, who is responsible,
+what was decided, where something lives. Those drift exactly like figures do, and they drift
+more quietly because nobody expects a sentence to be a data point.
+
+Where an entity is involved — a person, an organisation, a component, a device — that
+entity's own entry is the authoritative place for facts about it, and the pages that use
+those facts link to it. Otherwise the authoritative place is the one whose subject the fact
+actually is, which is not always the one that happens to have discovered it.
+
+**One exemption, and it is narrow**: compiled reference material with no changeable state —
+a derivation, a definition, an explanation of how something works — may repeat itself. It
+cannot drift, because there is nothing in it that moves. Do not stretch this to cover a
+reference page that quotes a current figure; the figure is not reference material just
+because its surroundings are.
+
+## A worked case: the fix that preserves the defect
+
+A figure lived in three places: the page that owned the subject, a summary that quoted it,
+and a status view that displayed it. The figure changed. Someone noticed, and did the
+conscientious thing — found all three and updated all three.
+
+That reads like a success, and it is the failure this rule is about. Nothing was left
+inconsistent, so nothing looked wrong; and the next time the figure changes there are still
+three places, one of which will be missed. **Aligning every copy perpetuates the
+duplication.** Alignment is half the repair; the other half is removing the duplication, so
+that one place holds the value and the other two derive it or point at it.
+
+The same shape appears in the other direction. When a generated report shows a wrong value,
+editing the report is the fastest thing available and costs the most: the next generation
+overwrites your edit and restores the wrong value, and the lesson everyone draws is that the
+generator is unreliable. The value was never the report's to hold.
+
+**The check**: after fixing a value, count how many places would have to change next time.
+If the answer is still more than one, the repair is not finished.
+
+## Where embedding actually works
+
+"Generated, linked or embedded" are not interchangeable, and the third one has a practical
+limit worth knowing before you rely on it. Transcluding a whole value into another document
+works dependably for an **isolated single value on its own line**. Inside a table cell or
+mid-sentence, rendering is frequently not what you expected, and the failure is silent —
+what a reader sees is a gap or a raw reference, not an error.
+
+So: where the presentation is delicate, generate or link rather than embed, and check what a
+reader actually sees rather than what the source says. Whichever of the three you use, the
+property that matters is the same one — **is there still exactly one place where a change is
+made?**
+
+## What actually enforces this
+
+This plugin ships nothing that runs when you write, so nothing in this table is enforced by
+it. What the states distinguish is whether a mechanism is *possible* — because that is the
+part that tells you where a little tooling would convert discipline into a check.
+
+| Rule | Enforcement |
+|---|---|
+| Each fact has one authoritative place | **Behaviour rule.** Nothing can tell an authoritative entry from a copy; both are text that says the same thing. The distinction lives in intent, which is unreadable. |
+| Other views are generated or linked rather than copied | **Enforceable, not enforced.** A build step that renders a view from its source makes copying structurally impossible for everything it covers — not as a check that complains, but as a path that offers no way to type the value in. This is the strongest available form of the rule and it needs no cleverness. |
+| A repeated figure or amount is detected | **Enforceable, not enforced.** Scanning your own text for the same number in two places is a short script. The instructive part is what happens to such a script: where one existed, it stopped being called by the list of checkers that runs, and it also threw on its first line — and neither fact was reported anywhere, because a checker nobody calls is indistinguishable from a checker that passes. If you build this one, the thing to verify is not that it works but that something runs it. |
+| The same statement appearing twice in prose is detected | **Behaviour rule**, and no mechanism is in sight. Two paragraphs can carry one fact with no shared string. |
+| A wrong value is corrected at the source | **Behaviour rule**, and the one that most resembles success when it fails — see the worked case. |
+
+*Measured 2026-09-15: this repository contains prose, one plugin manifest and one pre-push
+script, and that script checks commit identity and personal-data shapes. There is no
+executable here that examines knowledge structure at all. Re-check by 2026-12-15.*
+
+## The habit that carries the rule
+
+Since no mechanism catches a duplicate, what actually carries this is a step taken **before**
+writing: search for the fact before recording it. Not for the wording — for the subject. If
+it is already somewhere, you are looking at the authoritative place, and your options are to
+update it or to point at it.
+
+That search is the enforcement. Skipping it is how every duplicate in every system got
+there, and it is skipped because you already know the value you were about to write.
+
+## A cheap check before you write a fact down
+
+- Does this fact already exist somewhere? Did I look, or do I just not remember seeing it?
+- If it changes next month, how many places have to change? More than one is the finding.
+- Is this a view? Then can it be generated or linked instead of typed?
+- Am I fixing a value in something that was produced from somewhere else?
+- Is this a "just a status line" exception? Those are facts with changeable state, which is
+  precisely the scope.
