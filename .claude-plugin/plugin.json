@@ -1,7 +1,7 @@
 {
   "name": "imprint",
-  "description": "Working rules for running several coding agents without them ruining each other's work, and for growing a knowledge store that does not quietly rot. Ships the delegation contract (who leads, who advises, readers in parallel and exactly one writer), the blind-first-pass discipline that makes a second opinion worth asking for, the habit of measuring a property before asserting it, and four rules for recorded knowledge: one canonical place per fact, provenance including how it was obtained, superseding instead of deleting, and expiry triggered by use. Every rule states what enforces it, or says plainly that nothing does.",
-  "version": "0.2.0",
+  "description": "Working rules for running several coding agents without them ruining each other's work, and for growing a knowledge store that does not quietly rot. Ships the delegation contract (who leads, who advises, readers in parallel and exactly one writer), the blind-first-pass discipline that makes a second opinion worth asking for, the habit of measuring a property before asserting it, the session handover that leaves the next session a state rather than a puzzle, and four rules for recorded knowledge: one canonical place per fact, provenance including how it was obtained, superseding instead of deleting, and expiry triggered by use. Every rule states what enforces it, or says plainly that nothing does.",
+  "version": "0.3.0",
   "author": {
     "name": "mankind806"
   },

@@ -4,9 +4,10 @@ A suite of working rules for two things that turn out to be one thing: how sever
 coding agents cooperate without ruining each other's work, and how a knowledge base grows
 alongside the person using it without quietly rotting.
 
-Both are written as mechanisms rather than as advice, and every rule says which of three
+Both are written as mechanisms rather than as advice, and every rule says which of four
 things it is: enforced by something that stops you, *enforceable* but currently resting on
-discipline, or a behaviour rule with nothing behind it at all.
+discipline, reserved to a person because the rule's content *is* a human decision, or a
+behaviour rule with nothing behind it at all.
 
 It ships as a Claude Code plugin, so the rules arrive as skills the agent can reach for
 during a session rather than as a document somebody has to remember to open.
@@ -27,21 +28,28 @@ reach for one mid-flight.
 
 Early, and deliberately partial.
 
-**Both layers now ship.** Three rules in the agent-collaboration layer, four in the
+**Both layers now ship.** Four rules in the agent-collaboration layer, four in the
 knowledge layer: the three that the section below announced as shape rather than content,
-plus one for a failure mode named under *Who this is for* — a fact that was true when it was
-recorded and is still being quoted as current. Of the other two things that section
-announced, one was already here, and one turned out to be half delivered and half wrong;
-both are dealt with where they stand rather than quietly dropped.
+plus two for failure modes named under *Who this is for* — a fact that was true when it was
+recorded and is still being quoted as current, and a session that ended without leaving a way
+back in. Of the other two things that section announced, one was already here, and one turned
+out to be half delivered and half wrong; both are dealt with where they stand rather than
+quietly dropped.
 
 That does not make either layer complete. It makes the announced part of it real.
 
 The skills here were practice before they were text, which is the right order but means the
-text lags the practice. The three agent-collaboration skills have had one adversarial read
-by a party that did not write them. **The four knowledge skills have not, and that is the
-next thing due rather than a detail** — this repository's own rule is that zero findings in
-a first adversarial round on a non-trivial artefact is itself a finding, and four unread
-files cannot claim even that. Expect the structure to move again before it settles.
+text lags the practice. **All eight have now had at least one adversarial read by a party that
+did not write them** — the three agent-collaboration skills earlier, and the four knowledge
+skills on 2026-09-15. That round produced seventeen findings, an independent acceptance check
+added an eighteenth, and all but two are worked in here; the two that remain are named below as
+a backlog rather than left as an absence. This repository's own rule is that zero findings in a
+first adversarial round on a non-trivial artefact is itself a finding, so a round that found
+seventeen is the expected outcome rather than a bad sign — and three of them were places where
+a stranger following the text would have done the wrong thing, which is the class that
+mattered. **`session-handover` is the exception and says so: it is new in this release and has
+had no adversarial read at all**, which by the standard of the previous sentence is a gap and
+not a detail. Expect the structure to move again before it settles.
 
 ## Who this is for
 
@@ -85,12 +93,21 @@ things about that measurement are worth stating rather than glossing:
 
 ## What is in the box
 
-Seven skills and one agent, in the two layers described below. Each skill carries a section
-on what actually enforces it, and
-sorts every rule it holds into one of three states: **enforced** by something that really
-stops you, **enforceable but not enforced** where a mechanism is possible and nobody has
-built it, and a plain **behaviour rule** that holds only as long as the discipline does. The middle state is the one usually left out, and
-it is the useful one — it is a list of the places where a few lines of tooling would pay.
+Eight skills and one agent, in the two layers described below. Each skill carries a section
+on what actually enforces it, and sorts every rule it holds into one of four states:
+**enforced** by something that really stops you, **enforceable but not enforced** where a
+mechanism is possible and nobody has built it, **reserved to a person** where the rule's
+content is a handover to a human rather than a mechanism nobody wrote, and a plain **behaviour
+rule** that holds only as long as the discipline does.
+
+The second state is the one usually left out, and it is the most useful one — it is a list of
+the places where a few lines of tooling would pay. The fourth state started as three and gained
+its extra member from a rule that would not fit: `supersede-dont-delete` argues for it at
+length, including the fact that the rulebook these rules were drawn from files that particular
+rule one stage lower, and why that is worth saying rather than smoothing over. The two states
+fail differently — an unbuilt mechanism fails by never being built, a consent step fails by
+somebody deciding it was obvious enough to skip — and only one of the two is repaired by
+writing code.
 
 - **`delegation-contract`** – who leads and who advises, and how a delegated task tells the
   receiver which of the two it is – including why the flag you were invoked with does not
@@ -114,6 +131,14 @@ it is the useful one — it is a list of the places where a few lines of tooling
   The failure mode is plausibility rather than ignorance, and an over-cautious false
   assurance is the dangerous kind because nothing ever makes it fail.
 
+- **`session-handover`** – closing a session as the last step of the work rather than stopping
+  mid-air. The four things that are lost if nobody writes them down, and why the one everybody
+  does is the least valuable: uncommitted files are visible, while a paused job and an unwritten
+  decision are silent. Why the next step is the expensive item — it cannot be re-measured, only
+  re-thought. Why the trigger is the signal rather than a particular phrase, and why a
+  mechanism that fired on the phrase would make the rule worse. Where a handover note's
+  *existence* is a mechanism waiting to be written and its *usefulness* is not.
+
 The four that follow are the knowledge layer. They are written to be read in that order:
 each one assumes the one before it, and the last is unusable without the second.
 
@@ -133,7 +158,7 @@ each one assumes the one before it, and the last is unusable without the second.
   an overwrite makes unanswerable stays answerable: was the old value wrong, or right at the
   time and then changed. Completion and follow-up as two lines. And a contradiction as a
   full stop rather than a merge — including the boundary that keeps that from firing on every
-  routine update, and a plain statement that this rule does not fit the three states at all.
+  routine update, and the argument for the fourth state, which this rule is the reason for.
 
 - **`knowledge-ages`** – expiry triggered by use rather than by a schedule, with the
   dangerous entry being the recent-looking one. Why what ages is decided by the kind of
@@ -172,7 +197,10 @@ exactly one writer at a time. When a second opinion adds information and when it
 agreement – and why a closed, checkable question wants an independent measurement rather
 than another opinion. How to put disagreement in front of a human instead of averaging it
 away. Escalating to a stronger voice rather than resampling the same one after it has
-already failed twice.
+already failed twice. And, at the other end of the same work, closing a session so that the
+next one inherits a state rather than a puzzle — which belongs in this layer rather than the
+one above it, because what a session hands over is the work itself and not the knowledge it
+happened to record.
 
 **A knowledge system sits on top, and four of its rules now ship.** One canonical place per
 fact, with every other view generated, linked or embedded rather than copied. Provenance on
@@ -272,7 +300,7 @@ told generically, with no organisation, no product, no ticket number, no path of
 machine. Whether a passage is abstract is a question of meaning, and no pattern answers it. A
 page naming a real employer in plain words passes this hook exactly as a properly abstracted
 one does, and a blocklist of real names would not change that — it would only look as though
-it had. In the three states this repository sorts every rule into: the shapes and the
+it had. In the four states this repository sorts every rule into: the shapes and the
 identity are **enforced**; reading for abstraction stays a **behaviour rule** with nothing
 behind it. The hook says so itself, in every report it prints.
 

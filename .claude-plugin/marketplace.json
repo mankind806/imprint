@@ -9,7 +9,7 @@
     {
       "name": "imprint",
       "source": "./",
-      "description": "Working rules in two layers: multi-agent collaboration (the delegation contract, the blind first pass, measuring before asserting) and recorded knowledge (one canonical place, provenance on entry, superseding instead of deleting, knowledge that ages).",
+      "description": "Working rules in two layers: multi-agent collaboration (the delegation contract, the blind first pass, measuring before asserting, the session handover) and recorded knowledge (one canonical place, provenance on entry, superseding instead of deleting, knowledge that ages).",
       "category": "workflow"
     }
   ]
