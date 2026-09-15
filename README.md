@@ -42,8 +42,12 @@ The skills here were practice before they were text, which is the right order bu
 text lags the practice. **All eight have now had at least one adversarial read by a party that
 did not write them** — the three agent-collaboration skills earlier, and the four knowledge
 skills on 2026-09-15. That round produced seventeen findings, an independent acceptance check
-added an eighteenth, and all but two are worked in here; the two that remain are named below as
-a backlog rather than left as an absence. This repository's own rule is that zero findings in a
+added an eighteenth, and sixteen of the eighteen are worked in here. Of the two that remain,
+one is half done — the class of externally set value is described but not given the binding
+enumeration its source has — and the other is a measurement still owed: every skill
+description in this release runs past a thousand characters, and whether any limit truncates
+them has been observed in one runtime and never checked against a specification. *Re-check by
+2026-12-15.* This repository's own rule is that zero findings in a
 first adversarial round on a non-trivial artefact is itself a finding, so a round that found
 seventeen is the expected outcome rather than a bad sign — and three of them were places where
 a stranger following the text would have done the wrong thing, which is the class that
