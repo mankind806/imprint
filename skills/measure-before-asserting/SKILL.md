@@ -1,6 +1,6 @@
 ---
 name: measure-before-asserting
-description: "Runs, queries or looks the thing up before saying it, and treats your own notes and documentation as a dated snapshot rather than as evidence. Use before asserting a property of a system you do not control (whether a repository is public, what a provider's terms now say, which version is running), before describing what one of your own safeguards covers or blocks, before quoting a state that can change without your involvement (what a config contains, whether a gate still fires, what a path holds), and before any claim of those kinds is written into a rule, a README or a handover. Also when an assurance sounds careful and was never checked, and when a measurement has just contradicted something you wrote down earlier. Not for deciding who reviews the claim (use blind-first-pass), not for the mechanics of dispatching the check (use delegation-contract), and not for how long a stored look-up stays usable or how to record a re-check that found nothing changed (use knowledge-ages) — the division between those two is that a value a foreign organisation sets is never answered from storage at any age, which is this skill, while a value nobody sets individually ages on a horizon, which is that one. Recording where a measurement came from once you have it belongs to provenance-on-entry."
+description: "Runs, queries or looks the thing up before saying it, and treats your own notes and documentation as a dated snapshot rather than as evidence. Use before asserting a property of a system you do not control (whether a repository is public, what a provider's terms now say, which version is running), before describing what one of your own safeguards covers or blocks, before quoting a state that can change without your involvement (what a config contains, whether a gate still fires, what a path holds), and before any claim of those kinds is written into a rule, a README or a handover. Also when an assurance sounds careful and was never checked, and when a measurement has just contradicted something you wrote down earlier. Not for deciding who reviews the claim (use blind-first-pass), not for the mechanics of dispatching the check (use delegation-contract), not for the mechanics of closing a session so the next one can pick the work up (use session-handover), and not for how long a stored look-up stays usable or how to record a re-check that found nothing changed (use knowledge-ages) — the division between those two is that a value a foreign organisation sets is never answered from storage at any age, which is this skill, while a value nobody sets individually ages on a horizon, which is that one. Recording where a measurement came from once you have it belongs to provenance-on-entry."
 ---
 
 # Measure before asserting
@@ -29,6 +29,45 @@ A claim of any of those kinds that is about to be **written down** is the strong
 of all, because writing is what converts it into something other people will quote
 instead of check. Arithmetic you just did, a preference, a judgement call about what to
 build next: not this skill's business.
+
+## The values that are never answered from storage
+
+One class of value deserves a procedure rather than a preference, and the question that
+identifies it is **who is entitled to change this value?**
+
+If a single outside body sets it and may change it without telling you — an authority, an
+institution, a provider stating its own terms — then **no stored age is acceptable**, not even
+a day. Published conditions, a stated term, a documented procedure, a price, a timetable, an
+availability, who is responsible for which part: anything one body announces and can
+re-announce without consulting you belongs here. In the rulebook this was drawn from that list
+is binding rather than illustrative, and yours is worth writing down as a list too — a
+criterion re-applied from memory each time decides borderline cases inconsistently.
+
+Four steps, and the order is part of the rule:
+
+1. **Consult the stored state silently.** Saying it first is the mistake, not saying it at
+   all: a figure that has been spoken lands, and a caveat after it does not retract it.
+2. **Look it up now**, before answering.
+3. **If the two differ, give both**, mark the looked-up one as the one that governs, keep the
+   retrieved source, and **supersede the stored entry in the same move** — not afterwards, not
+   as a note to self. Skipping this is the quiet failure: the answer is right, and the store
+   still holds the wrong value for whoever reads it next.
+4. **If nothing is found**, give the stored state *with its age*. An entry carrying no date is
+   reported as undated. Never estimate one.
+
+Say what the source does not settle. That often yields "not answerable" rather than a figure,
+and "not answerable" is an answer.
+
+**Where the stored state governs and the published one does not** — these follow from the same
+criterion rather than from a list to be memorised: **anything you were a party to.** Terms
+fixed by an agreement you hold, because the conditions published today govern whoever agrees
+today and not an agreement already made. Your own arrangements, amounts from invoices in your
+possession, measurements you took yourself. Values your own store actively monitors. And
+private individuals, who are not looked up at all. If nobody outside could have changed it
+without your involvement, the store is the better source and the public page is the wrong one.
+
+What drifts on a horizon instead of falling under this section — anything no single body sets
+— belongs to `knowledge-ages`.
 
 ## Your own documentation is not a measurement
 

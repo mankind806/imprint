@@ -1,6 +1,6 @@
 ---
 name: provenance-on-entry
-description: "Records where a fact came from at the moment it is written down, including how it was obtained, and keeps the date something is due apart from the date it was recorded. Use whenever you write a fact into anything that will outlive the session — a knowledge page, a decision record, a rule, a README, a handover note — when you are recording a deadline, a validity period or any other date that someone will later act on, when you are writing down a figure taken from a document, a conversation, a measurement or a search, when you are summarising several sources into one passage and the attributions would otherwise collect at the end, and when an entry you are about to make would be unattributable to anyone reading it later. Not for deciding whether the claim is currently true (use measure-before-asserting), not for deciding where the single authoritative copy of it lives (use one-canonical-place), not for replacing an entry whose value has changed (use supersede-dont-delete) and not for deciding whether a recorded origin has aged past the point where it can be quoted (use knowledge-ages)."
+description: "Records where a fact came from at the moment it is written down, including how it was obtained, and keeps the date something is due apart from the date it was recorded. Use whenever you write a fact into anything that will outlive the session — a knowledge page, a decision record, a rule, a README, a handover note — when you are recording a deadline, a validity period or any other date that someone will later act on, when you are writing down a figure taken from a document, a conversation, a measurement or a search, when you are summarising several sources into one passage and the attributions would otherwise collect at the end, and when an entry you are about to make would be unattributable to anyone reading it later. Not for deciding whether the claim is currently true (use measure-before-asserting), not for deciding where the single authoritative copy of it lives (use one-canonical-place), not for replacing an entry whose value has changed (use supersede-dont-delete) and not for deciding whether a recorded origin has aged past the point where it can be quoted (use knowledge-ages) and not for what a closing session owes the next one beyond the entries it wrote (use session-handover)."
 ---
 
 # Provenance on entry
@@ -58,26 +58,31 @@ the origin next to the sentence it supports, even when that means repeating the 
 four times on one page. The repetition is not duplication in the sense
 `one-canonical-place` forbids — it is an attribution edge, not a second copy of the fact.
 
-## Two worked cases, and the second one is about this rule
+## Two cases, the first a shape and the second measured
 
-**The unattributable figure.** A number was recorded on a page, correct at the time, with no
-origin. A year later it disagreed with a number somebody else had. Resolving it required
-finding out where each came from — and for one of them that was no longer possible. The
-figure was not wrong. It was **unusable**, which in practice is the same and feels worse,
-because it looks like information right up to the moment you need to rely on it.
+The first is written as a shape rather than as an incident, because a shape is what it is. An
+example that claims to be an event owes a source, and this one has none — which is this very
+rule turned on this file.
 
-**The rule that claimed a mechanism it did not have.** A rulebook rated this very rule as
-mechanically enforced and, as such ratings should, named a file as the enforcer. The rule
-text had been carried over into a second repository. In that second repository the named file
-does not exist — it had never been part of the transfer, because the rule travelled and the
-tool did not.
+**The unattributable figure.** Consider a number recorded on a page, correct when it was
+written, with no origin against it. Some time later it disagrees with a number somebody else
+holds. Resolving that means finding out where each came from, and for an entry with no origin
+there is nothing to go back to. The figure is not wrong. It is **unusable**, which in practice
+is the same thing and feels worse, because it looks like information right up to the moment you
+need to rely on it.
 
-Nothing about that was noticed for a while, and the reason it was not is the point: the entry
-looked *more* rigorous than the honest version would have. It carried a citation. The
-citation is what stopped anyone checking. **An assurance is a claim like any other, and a
-claim about your own enforcement is the one nobody audits** — `measure-before-asserting` is
-about that class in general, and this is what it looks like when it lands on provenance
-itself.
+**The rule that claimed a mechanism it did not have.** This one is measured. A rulebook rated
+this very rule as mechanically enforced and, as such ratings should, named a file as the
+enforcer. In the tree that rulebook ships in, the named file does not exist — the rating was
+written where the enforcing tool is not.
+
+The rulebook's own preamble did say that its ratings described an intended state, so the
+mistake was disclosed somewhere. That is exactly what makes it instructive rather than
+excusable: the entry looked *more* rigorous than the honest version would have, because it
+carried a citation, and the citation is what stops anyone opening the path. **An assurance is
+a claim like any other, and a claim about your own enforcement is the one nobody audits** —
+`measure-before-asserting` is about that class in general, and this is what it looks like when
+it lands on provenance itself.
 
 That is why the table below rates this rule as enforceable rather than enforced, and why the
 rating is checkable against this repository's own tree rather than asserted.
@@ -90,7 +95,7 @@ states say what is *possible*, which is the useful distinction.
 | Rule | Enforcement |
 |---|---|
 | Some origin is present on the entry | **Enforceable, not enforced.** A write path that refuses an entry with an empty origin field is a real mechanism and a small one. But note its shape before you trust it: it covers **only the writes that go through it.** The same file opened in an editor bypasses it completely, and there is no way to close that from inside the tool — so even where this row reads "enforced" in some system, it means "enforced on one of two paths", and the rule applies unchecked on the other. |
-| The origin named is the true one | **Behaviour rule, and no mechanism is possible.** A tool can require the field and check its shape. Whether the source actually says that is a question about meaning, and every mechanism here stops at the field being non-empty. |
+| The origin named is the true one | **Split, and the halves land in different states.** That the named source *exists* — a file at that path, a snapshot with that date, a reachable page — is decidable, and so is whether a quoted string occurs in it: both are **enforceable, not enforced**, and both are worth building before the harder half is written off. Whether the source actually *says what the entry claims* is a question about meaning, and for that half no mechanism is possible; it is a **behaviour rule**. Stating the whole row as impossible concedes the cheap half along with the expensive one. |
 | The method is stated, not just the source | **Enforceable, not enforced** — a fixed vocabulary of methods in a required field would do it, and would also make the field machine-readable for the ageing rule. Nothing here has one. |
 | A due date is recorded separately from the recording date | **Enforceable, not enforced** for the *separation*: two fields instead of one is a schema decision, and a schema can refuse an entry that has a deadline in prose and only one date. |
 | The right date went in each field | **Behaviour rule.** Two dates are two dates; no checker knows which is which. This half stays yours no matter how good the schema is. |

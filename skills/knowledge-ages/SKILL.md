@@ -25,27 +25,17 @@ So the reflex to build is not suspicion of old material. It is a check on materi
 claim gets waved through because it fits — arriving here as a property of dates rather than
 of statements.
 
-## What ages is decided by the kind of evidence, not the kind of content
-
-This is the part that is usually got wrong, and getting it wrong in the obvious direction
-produces a rule that fires on everything.
-
-- A figure supported by a **document** does not age. The document goes on saying the same
-  thing; nothing about it moves. If you want to use that figure as **today's** value, you do
-  not re-check the old one — you establish today's value afresh, which is a different act
-  with a different result.
-- A figure supported by a **look-up** ages. It was never a fact about a document; it was a
-  report about the state of the world on the day you looked, and the world was under no
-  obligation to tell you it had moved on.
-
-An earlier version of this rule tried to split "timeless formula" from "its example numbers"
-instead. That could not be applied to a real page, on which a single line frequently carries
-both and cites one source for them.
-
 ## Which values age, and which may never be quoted from storage at all
 
 The routing question, and it decides every borderline case: **who is entitled to change this
 value?**
+
+**This question is asked first.** The evidence-kind split in the next section applies only to
+what this one leaves behind, and taking them in the other order produces a specific wrong
+answer: a price list or a fee table held as a document is document-backed, so the split says
+"does not age" — and the document is a snapshot of something its issuer may already have
+changed. Whoever may change it decides whether the value may be quoted at all; only then does
+the kind of evidence decide how long a quotable value lasts.
 
 If a single organisation sets it and may change it without telling you — an authority, an
 institution, a provider setting its own terms — then **no age is acceptable**, not even a
@@ -71,6 +61,24 @@ is both. Only "who may change it" separates them.
 
 If your own version of this rule carries an example, check that the example is on the right
 side of it.
+
+## What ages is decided by the kind of evidence, not the kind of content
+
+This is the part that is usually got wrong, and getting it wrong in the obvious direction
+produces a rule that fires on everything. It applies to what the routing question above has
+already left here — not to values a single body sets, whatever they are written on.
+
+- A figure supported by a **document** does not age. The document goes on saying the same
+  thing; nothing about it moves. If you want to use that figure as **today's** value, you do
+  not re-check the old one — you establish today's value afresh, which is a different act
+  with a different result.
+- A figure supported by a **look-up** ages. It was never a fact about a document; it was a
+  report about the state of the world on the day you looked, and the world was under no
+  obligation to tell you it had moved on.
+
+An earlier version of this rule tried to split "timeless formula" from "its example numbers"
+instead. That could not be applied to a real page, on which a single line frequently carries
+both and cites one source for them.
 
 ## Confirming is not superseding
 
@@ -135,10 +143,10 @@ This plugin ships nothing that runs when you write or when you read.
 |---|---|
 | An entry carries an origin from which an age can be computed | **Enforceable, not enforced** — this is `provenance-on-entry`'s row, and this rule is entirely parasitic on it. Without a machine-readable origin and method, nothing below is even arithmetic. |
 | Entries past their horizon can be listed | **Enforceable, not enforced**, and the easiest win in the knowledge layer: read the origin dates, compare against a horizon, print what is over it. No judgement in it at all. |
-| The check happens at the moment of use | **Behaviour rule.** A list of stale entries is not the rule; the rule is that you notice before you quote. Nothing observes a quotation, and the list is consulted only by someone who already thought of it. |
+| The check happens at the moment of use | **Behaviour rule where entries are read directly; enforceable where they are read through a tool** — a retrieval path can print an entry's age alongside it, which puts the age in front of the reader at exactly the moment the rule is about. What stays a behaviour rule either way is the reading that bypasses the tool, and the acting on what the age says. A list of stale entries is not the rule; the rule is that you notice before you quote, and a list is consulted only by someone who already thought of it. |
 | A re-date of an unchanged entry does not travel the replacement path | **Enforceable, not enforced** — a store with a distinct verb for it enforces the distinction by having somewhere correct to go. Where there is no such verb, it is a behaviour rule and a fragile one, because the replacement verb is right there and does something that looks close enough. |
-| Whether a value is one a foreign body sets | **Behaviour rule, and no mechanism is in sight.** Nothing in stored text distinguishes a value somebody else controls from one you agreed yourself, and none of the exemptions is distinguishable either. The answering party decides it every time, unobserved. This gap is named rather than closed: a named gap is checkable, an unnamed one looks like an absence of errors. |
-| Entries with no origin marker | **Not checkable**, and reported as its own count rather than folded into the pass. |
+| Whether a value is one a foreign body sets | **Behaviour rule, and no mechanism is in sight.** Nothing in stored text distinguishes a value somebody else controls from one you were a party to, and the cases where the store governs instead (named in `measure-before-asserting`) are no more distinguishable than the rest. The answering party decides it every time, unobserved. This gap is named rather than closed: a named gap is checkable, an unnamed one looks like an absence of errors. |
+| Entries with no origin marker are counted and reported separately | **Enforceable, not enforced.** Listing entries that carry no origin at all is as short as listing the ones past a horizon, and the point of it is that this class is a check *outcome* — not checkable — rather than a state of the rule. Reporting it apart from the pass is mechanical; treating its silence as freshness is what the row prevents. |
 
 *Measured 2026-09-15: this repository contains prose, one plugin manifest and one pre-push
 script, and that script checks commit identity and personal-data shapes. None of the
@@ -146,8 +154,10 @@ script, and that script checks commit identity and personal-data shapes. None of
 
 ## A cheap check before you quote a stored value
 
-- How was this obtained — read off a document, or looked up? Only the second one ages.
-- Who is entitled to change this value? If it is one organisation, do not quote this; look.
+- **First:** who is entitled to change this value? If it is one outside body, do not quote
+  this at all; look it up. The rest of this list does not apply to it.
+- Then: how was this obtained — read off a document, or looked up? Only the second one ages,
+  and a document does not exempt a value the question above already routed away.
 - Does the date feel recent? That is the trigger, not the exemption.
 - If I look again and nothing changed, do I have a way to record that which does not claim a
   change?

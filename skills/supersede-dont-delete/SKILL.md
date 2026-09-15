@@ -1,6 +1,6 @@
 ---
 name: supersede-dont-delete
-description: "Replaces an outdated entry instead of overwriting it, so the state that was replaced stays provable and dated after the visible one changes, and stops a process rather than resolving it when a new statement contradicts a stored one. Use when a stored value has changed and you are about to type over it, when an item is complete and you are about to delete its line, when you are tempted to write the completion and the follow-up step into one line, when a new statement disagrees with what is already recorded and taking the newer one looks obvious, when you need to know later whether an old value was wrong or was right at the time, and when a convention for recording replacements has changed and a stock of older entries is tempting you into a migration. Not for re-dating an entry that turned out to be unchanged, which is not a replacement at all (use knowledge-ages), not for deciding which place holds the value being replaced (use one-canonical-place) and not for recording where the replacing value came from (use provenance-on-entry)."
+description: "Replaces an outdated entry instead of overwriting it, so the state that was replaced stays provable and dated after the visible one changes, and stops a process rather than resolving it when a new statement contradicts a stored one. Use when a stored value has changed and you are about to type over it, when an item is complete and you are about to delete its line, when you are tempted to write the completion and the follow-up step into one line, when a new statement disagrees with what is already recorded and taking the newer one looks obvious, when you have just found a second stored copy of a fact that disagrees with the first, when you need to know later whether an old value was wrong or was right at the time, and when a convention for recording replacements has changed and a stock of older entries is tempting you into a migration. Not for re-dating an entry that turned out to be unchanged, which is not a replacement at all (use knowledge-ages), not for deciding which place holds the value being replaced (use one-canonical-place), not for recording where the replacing value came from (use provenance-on-entry) and not for the values that are never answered from storage at all, where a difference is resolved by looking rather than by asking (use measure-before-asserting)."
 ---
 
 # Supersede, don't delete
@@ -25,20 +25,24 @@ wrong reading wastes a day in one direction and repeats a mistake in the other.
 An overwrite destroys the distinction completely and leaves a value that looks perfectly
 trustworthy. **The information was not wrong afterwards. It was absent, and nothing said so.**
 
-## A worked case: the tidy overwrite
+## A case of this shape — told as a shape, because that is all it is
 
-A figure needed updating. It was one line in one file; the new value was typed over the old
-one; the file was saved. This is the correct-looking action and takes four seconds.
+Nothing below is a report of an incident; it is the shape the failure takes, and it is written
+as a shape rather than dressed up as a dated event. A worked case that cannot name its source
+should say so, which is `provenance-on-entry` applied to this file.
 
-Weeks later the figure was disputed from another direction, and the question was exactly the
-one above — had the earlier figure been a mistake, or had the thing itself changed? The file
-held the new number and no trace of the old one. The commit history held a diff, which is
-better than nothing and is not the same thing: it says the text changed on a date, not
-whether the change was a correction or an update, and it is not where anybody reading the
-knowledge looks.
+A figure needs updating. It is one line in one file, so the new value is typed over the old
+one and the file is saved. This is the correct-looking action and it takes four seconds.
 
-The repair was to go back to the source and re-derive both states, which cost far more than
-the four seconds saved, and succeeded only because the source still existed.
+Later the figure is disputed from another direction, and the question is exactly the one above
+— was the earlier figure a mistake, or was it right at the time and then changed? The file
+holds the new number and no trace of the old one. The commit history holds a diff, which is
+better than nothing and is not the same thing: it says the text changed on a date, not whether
+the change was a correction or an update, and it is not where anybody reading the knowledge
+looks.
+
+The repair is to go back to the source and re-derive both states, which costs far more than the
+four seconds saved — and only works at all while the source still exists.
 
 ## The second worked case is one line long
 
@@ -71,7 +75,13 @@ Two consequences worth stating, because both get decided wrongly:
 
 When a new statement disagrees with a stored one and it is **not clear which holds**, the
 correct action is not to take the newer one. It is to change nothing, show both states in
-full, and let a person decide. The process rests until then, and the open point is
+full, and let a person decide.
+
+**Two stored copies that disagree are this case, not a separate one.** Finding the same fact
+in two places holding different values looks like a duplication to clear up, and clearing it
+up means choosing one — which is the decision this rule reserves. `one-canonical-place` says
+where the fact belongs; it does not say which of the two values is true, and a copy sitting in
+the right place is not thereby the current one. Stop first, align afterwards. The process rests until then, and the open point is
 additionally kept visible as its own line — the stop halts the work, the line keeps it from
 being forgotten once the work resumes.
 
@@ -92,46 +102,57 @@ everything gets switched off.
 
 ## What actually enforces this
 
-This plugin ships nothing that runs when you write. The states below say what is possible,
-and one row cannot be stated in them at all.
+This plugin ships nothing that runs when you write. The states below say what is possible —
+and one of them, **reserved to a person**, exists because of the last rule in this skill.
 
 | Rule | Enforcement |
 |---|---|
 | Immutable sources are never modified after they are first committed | **Enforceable, not enforced.** This is the strongest mechanism available anywhere in the knowledge layer: a commit-time check that refuses a modification or deletion under a path prefix is short, decidable and has no judgement in it. Nothing here implements it. |
 | A superseded value cannot be erased through the tool | **Enforceable, not enforced** — and worth noting for its shape: the achievable version is not a check that complains but a write path that **offers no operation** for removing a replaced state. A mechanism that cannot express the wrong thing beats one that detects it. |
 | A value overwritten by editing the file directly keeps its history | **Behaviour rule**, and this is the gap the row above does not close. Whatever the tool refuses, an editor will do, and nothing observes it. |
-| A knowledge page is not deleted outright | **Behaviour rule.** Immutability protects sources; a compiled page has no such guard, and deleting one is an ordinary file operation. |
+| A knowledge page is not deleted outright | **Enforceable, not enforced** — the same mechanism as the row above with a different path prefix, and that is the whole argument: a commit-time check that refuses a deletion under a prefix does not care which prefix it is given. Where this was measured no gate prevented the deletion of a compiled page, which is a current state rather than an impossibility. It reads like the harder case because immutability is discussed for sources and never for pages. |
 | Completion and follow-up are separate lines | **Behaviour rule.** |
 | A central value is superseded everywhere it is authoritative | **Behaviour rule**, for the same reason duplication is undetectable — see `one-canonical-place`. |
-| A contradiction stops and waits for a person | *No cell in this scale — see below.* |
+| A contradiction is noticed rather than merged away | **Behaviour rule.** Nothing recognises a contradiction, because recognising one is the judgement the rule is about. |
+| A noticed contradiction is resolved by a person rather than by taking the newer value | **Reserved to a person.** Not an unbuilt mechanism — the rule's content *is* the handover. See below, including why the rulebook this came from does not file it here. |
 
 *Measured 2026-09-15: this repository holds prose, one plugin manifest and one pre-push
 script, and that script checks commit identity and personal-data shapes. Neither of the
 "enforceable" rows above exists here. Re-check by 2026-12-15.*
 
-## The row that does not fit the scale, and why that is said rather than rounded
+## The fourth state, and why the rulebook this came from does not use it here
 
-This repository sorts rules into three states: enforced, enforceable but not enforced, and
-behaviour rule. The contradiction rule fits none of them, and forcing it into one loses
-something real.
+This repository sorts rules into four states: enforced, enforceable but not enforced,
+**reserved to a person**, and plain behaviour rule. The fourth exists because of the
+contradiction rule, and the reason is worth the paragraph.
 
-It is not enforced. It is not usefully *enforceable* either — no mechanism can recognise a
-contradiction, because recognising one is the judgement the rule is about. And calling it a
-behaviour rule, which is where the three-state scale would put it, says "nothing holds this
-but discipline" — which is true about **noticing** the contradiction and false about what
-happens next. What happens next is not an absent mechanism. **It is a handover to a person.**
-The rule's content *is* the human decision point: change nothing, show both, wait.
+The stop is not enforced, and it is not usefully *enforceable* either — no mechanism can
+recognise a contradiction, because recognising one is the judgement the rule is about. But
+calling the whole rule a behaviour rule says "nothing holds this but discipline", which is true
+about **noticing** the contradiction and false about what happens next. What happens next is
+not an absent mechanism. **It is a handover to a person**, and the rule's content *is* that
+decision point: change nothing, show both, wait.
 
-That is a fourth state, and a scale that asks only "is it enforced, and could it be" has no
-room for "it hangs on someone answering". The difference matters in practice, because the two
-fail differently: an unbuilt mechanism fails by never being built, and a consent step fails
-by someone deciding it was obvious enough to skip. Only one of those is fixed by writing
-code.
+The two fail differently, which is why one cell cannot carry both. An unbuilt mechanism fails
+by never being built. A consent step fails by somebody deciding it was obvious enough to skip.
+Only the first is repaired by writing code, and a table that files them together tells you to
+write code for the second.
 
-So the honest form is prose: **noticing a contradiction is unenforced and unenforceable;
-resolving one is reserved to a person and is not the kind of thing a state in this table
-describes.** The same shape turns up wherever a rule ends in "ask first", and where it does,
-expect to write a sentence rather than fill a cell.
+**Here this skill classifies something its source does not, and that is said rather than
+smoothed over.** The rulebook this rule was drawn from has a consent stage of its own — it uses
+it for the points where an action waits on a human yes, and this rule is not one of them there.
+It rates the contradiction rule at the behaviour stage and records the human decision as the
+*consequence* of a finding rather than as the thing being enforced, with the explicit reach
+that noticing a contradiction is judgement work and enforced by nothing whatsoever. That
+reading is coherent: what is unenforced is the noticing, and the handover is where unenforced
+noticing leads.
+
+So the table above splits the rule in two rather than picking a side, which is the only form
+true to both readings — noticing is a behaviour rule, resolving is reserved to a person. What
+does not get glossed is that the second row is a classification made **here** and not carried
+over, and that a reader comparing this skill against its source will find the rule filed one
+stage lower there. Wherever a rule ends in "ask first", expect this split rather than a single
+cell.
 
 ## A cheap check before you change a stored value
 

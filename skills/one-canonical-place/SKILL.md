@@ -64,6 +64,27 @@ generator is unreliable. The value was never the report's to hold.
 **The check**: after fixing a value, count how many places would have to change next time.
 If the answer is still more than one, the repair is not finished.
 
+## When you cannot tell which copy is current
+
+Aligning copies presupposes you know which of them holds. Often you do not — and that case is
+not a duplication problem at all. It is a **contradiction**, and it is handled first.
+
+`supersede-dont-delete` carries the procedure: change nothing, show both states in full, and
+let a person decide which one holds. Align and remove the duplication only after that is
+settled.
+
+The mistake this ordering prevents is specific and it feels like diligence. Having decided
+which place *should* hold the fact, you propagate from it — and **which place should hold a
+fact and which copy currently holds the right value are different questions.** The
+authoritative place is perfectly capable of carrying the stale copy; the value that was
+written later may sit in the summary. Deciding the location first and then aligning outward
+makes the wrong value the only one, with the whole weight of this rule behind it, and destroys
+the second reading in the process.
+
+One difference is not a contradiction: where the change-authority is settled and the party
+entitled to change the value did change it, that is an update. Supersede it on the spot and
+align; there is nothing to ask.
+
 ## Where embedding actually works
 
 "Generated, linked or embedded" are not interchangeable, and the third one has a practical
@@ -85,9 +106,9 @@ part that tells you where a little tooling would convert discipline into a check
 
 | Rule | Enforcement |
 |---|---|
-| Each fact has one authoritative place | **Behaviour rule.** Nothing can tell an authoritative entry from a copy; both are text that says the same thing. The distinction lives in intent, which is unreadable. |
+| Each fact has one authoritative place | **Behaviour rule without a marking convention; enforceable with one.** Left as plain prose, nothing can tell an authoritative entry from a copy — both are text that says the same thing, and the distinction lives in intent. Where the store marks the authoritative entry instead, with a named anchor or an equivalent addressable marker, the distinction becomes readable and a scanner can flag an unmarked repetition of a marked value. The convention is the mechanism; adopting one is what moves this row. |
 | Other views are generated or linked rather than copied | **Enforceable, not enforced.** A build step that renders a view from its source makes copying structurally impossible for everything it covers — not as a check that complains, but as a path that offers no way to type the value in. This is the strongest available form of the rule and it needs no cleverness. |
-| A repeated figure or amount is detected | **Enforceable, not enforced.** Scanning your own text for the same number in two places is a short script. The instructive part is what happens to such a script: where one existed, it stopped being called by the list of checkers that runs, and it also threw on its first line — and neither fact was reported anywhere, because a checker nobody calls is indistinguishable from a checker that passes. If you build this one, the thing to verify is not that it works but that something runs it. |
+| A repeated figure or amount is detected | **Enforceable, not enforced.** Scanning your own text for the same number in two places is a short script. The instructive part is what happens to such a script: where one existed, it both stopped being called by the list of checkers that runs and threw on its first line, and whether it was stood down deliberately or simply broke is no longer clear from what was written down — which is itself the lesson, because a checker nobody calls is indistinguishable from a checker that passes. If you build this one, the thing to verify is not that it works but that something runs it. |
 | The same statement appearing twice in prose is detected | **Behaviour rule**, and no mechanism is in sight. Two paragraphs can carry one fact with no shared string. |
 | A wrong value is corrected at the source | **Behaviour rule**, and the one that most resembles success when it fails — see the worked case. |
 
@@ -111,5 +132,8 @@ there, and it is skipped because you already know the value you were about to wr
 - If it changes next month, how many places have to change? More than one is the finding.
 - Is this a view? Then can it be generated or linked instead of typed?
 - Am I fixing a value in something that was produced from somewhere else?
+- Two copies disagree — do I actually know which one holds? If not, this is a contradiction
+  before it is a duplication: stop, show both, ask. Aligning now would make one of them
+  canonical by accident.
 - Is this a "just a status line" exception? Those are facts with changeable state, which is
   precisely the scope.
